@@ -1,36 +1,12 @@
-# Dependencies
 node_modules/
-__pycache__/
-*.pyc
-
-# Build output (keep dist for deployment)
-# dist/ — intentionally tracked for static hosting
-
-# Session recordings (too large, generated at runtime)
-sessions/
-
-# Logs
-*.log
-npm-debug.log*
-
-# Environment
-.env
-.env.local
-
-# OS
-.DS_Store
-Thumbs.db
-
-# IDEs
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Python
-*.egg-info/
-.pytest_cache/
-apps/mcp-proxy/node_modules/
 __pycache__/
 sessions/
 .next/
+.env
+.env.local
+*.log
+.DS_Store
+.vscode/
+.idea/
+.pytest_cache/
+logs/
