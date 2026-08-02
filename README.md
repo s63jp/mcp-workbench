@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MCP Workbench
+
+> The Postman for Model Context Protocol servers.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+## Overview
+
+MCP Workbench is a web-based platform for testing, validating, and debugging [Model Context Protocol](https://modelcontextprotocol.io) (MCP) servers. Stop wrestling with config files and start shipping.
+
+## Features
+
+- **Instant Validation** — Connect to any MCP server and validate tools/schemas in seconds
+- **Compatibility Reports** — See which clients support your server (Claude, Cursor, VS Code, etc.)
+- **Saved Configurations** — Store, version, and share MCP server configs
+- **CI/CD Integration** — Webhook-based regression testing
+- **Raw JSON-RPC** — Inspect every message for complete transparency
+
+## Tech Stack
+
+- **Frontend:** Next.js 16 + React 19 + TypeScript + Tailwind CSS v4
+- **Deployment:** Static export (Vercel / GitHub Pages / Cloudflare Pages)
+- **Icons:** Lucide React
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+# Output in ./dist
+```
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+### Vercel (recommended)
+```bash
+npx vercel --prod
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### GitHub Pages
+```bash
+npm run build
+# Push dist/ to gh-pages branch
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © MCP Workbench
