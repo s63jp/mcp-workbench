@@ -33,3 +33,4 @@ Thumbs.db
 apps/mcp-proxy/node_modules/
 __pycache__/
 sessions/
+.next/
