@@ -10,10 +10,13 @@ import os
 import signal
 import sys
 import time
+import traceback
 import uuid
 
 import psutil
 from aiohttp import web, WSMsgType
+
+app_start_time = 0  # Global variable for uptime tracking
 
 STATIC_DIR = os.path.join(os.path.dirname(__file__), "dist")
 ALLOWED_COMMANDS = {"npx", "node", "python3"}
@@ -223,6 +226,49 @@ async def api_health(request):
 async def api_metrics(request):
     return web.json_response(metrics.summary())
 
+async def api_analytics(request):
+    """Return basic analytics about server usage."""
+    try:
+        # Count beta signups
+        signup_count = len([f for f in os.listdir("beta-signups") if f.endswith(".json")])
+        
+        # Count active sessions (last 24 hours)
+        active_sessions = 0
+        cutoff = time.time() - 86400
+        for f in os.listdir("sessions"):
+            if f.endswith(".json"):
+                try:
+                    session_path = os.path.join("sessions", f)
+                    if os.path.getmtime(session_path) > cutoff:
+                        active_sessions += 1
+                except:
+                    continue
+        
+        # Get server uptime
+        uptime = time.time() - app_start_time
+        
+        return web.json_response({
+            "success": True,
+            "data": {
+                "beta_signups": signup_count,
+                "active_sessions_24h": active_sessions,
+                "uptime_seconds": int(uptime),
+                "server_version": "2.0.0"
+            }
+        })
+    except Exception as e:
+        slog("analytics.error", error=str(e))
+        return web.json_response({"error": "Internal server error"}, status=500)
+
+async def api_signup_count(request):
+    """Return current beta signup count (for public display)."""
+    try:
+        signup_count = len([f for f in os.listdir("beta-signups") if f.endswith(".json")])
+        return web.json_response({"success": True, "count": signup_count})
+    except Exception as e:
+        slog("signup_count.error", error=str(e))
+        return web.json_response({"error": "Internal server error"}, status=500)
+
 async def api_sessions(request):
     sessions = []
     if os.path.isdir("sessions"):
@@ -236,31 +282,59 @@ async def api_beta_signup(request):
         data = await request.json()
         email = data.get("email", "").strip()
         servers = data.get("servers", "").strip()
-        tools = data.get("tools", "")
+        tools = data.get("tools", "").strip()
         feature = data.get("feature", "").strip()
         
-        if not email or "@" not in email:
-            return web.json_response({"error": "Valid email required"}, status=400)
+        # Input validation
+        if not email or "@" not in email or "." not in email.split("@")[-1]:
+            return web.json_response({"error": "Valid email address required"}, status=400)
+        if len(email) > 254:  # RFC 5321 max length
+            return web.json_response({"error": "Email too long"}, status=400)
+        if not servers:
+            return web.json_response({"error": "Please tell us which MCP servers you use"}, status=400)
         
+        # Sanitize email for filename
+        safe_email = email.replace('@', '_AT_').replace('.', '_')
+        if len(safe_email) > 100:  # Prevent overly long filenames
+            safe_email = safe_email[:100]
+            
         signup = {
             "email": email,
             "servers": servers,
             "tools": tools,
             "feature": feature,
             "date": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-            "ip": request.remote
+            "ip": request.remote,
+            "user_agent": request.headers.get("User-Agent", "")
         }
         
         os.makedirs("beta-signups", exist_ok=True)
-        filename = os.path.join("beta-signups", f"{email.replace('@', '_AT_').replace('.', '_')}_{int(time.time())}.json")
+        filename = os.path.join("beta-signups", f"{safe_email}_{int(time.time())}.json")
+        
+        # Prevent duplicate signups from same IP in short time
+        recent_signups = [f for f in os.listdir("beta-signups") 
+                         if f.endswith(".json") and 
+                         (time.time() - os.path.getmtime(os.path.join("beta-signups", f))) < 300]
+        
+        if len(recent_signups) > 3:  # More than 3 signups in 5 minutes
+            slog("beta.rate_limit", ip=request.remote, count=len(recent_signups))
+            return web.json_response({"error": "Too many signups from this IP. Please try again later."}, status=429)
+        
         with open(filename, "w") as f:
             json.dump(signup, f, indent=2)
         
-        slog("beta.signup", email=email, servers=servers, tools=tools)
-        return web.json_response({"success": True, "message": "Thanks! We'll email you within 24 hours."})
+        slog("beta.signup", email=email, servers=servers, tools=tools, ip=request.remote)
+        return web.json_response({
+            "success": True, 
+            "message": "Thanks! We'll email you within 24 hours.",
+            "count": len([f for f in os.listdir("beta-signups") if f.endswith(".json")])
+        })
+    except json.JSONDecodeError:
+        slog("beta.error", error="Invalid JSON")
+        return web.json_response({"error": "Invalid request format"}, status=400)
     except Exception as e:
-        slog("beta.error", error=str(e))
-        return web.json_response({"error": str(e)}, status=500)
+        slog("beta.error", error=str(e), stack=traceback.format_exc())
+        return web.json_response({"error": "Internal server error"}, status=500)
 
 async def static_handler(request):
     path = request.match_info.get("path", "")
@@ -367,12 +441,17 @@ async def ws_handler(request):
 
 # ─── Main ─────────────────────────────────────────────────────────
 async def main():
+    global app_start_time
+    app_start_time = time.time()
+    
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 3456
     app = web.Application()
     app.router.add_get("/api/health", api_health)
     app.router.add_get("/api/metrics", api_metrics)
     app.router.add_get("/api/sessions", api_sessions)
     app.router.add_post("/api/beta-signup", api_beta_signup)
+    app.router.add_get("/api/analytics", api_analytics)
+    app.router.add_get("/api/signup-count", api_signup_count)
     app.router.add_get("/ws", ws_handler)
     app.router.add_get("/{path:.*}", static_handler)
 

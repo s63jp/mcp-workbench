@@ -14,7 +14,7 @@ I built MCP Workbench because I was tired of debugging MCP servers in the termin
 - Test tool calls with parameters right in the browser
 - Get raw JSON-RPC logs for debugging
 
-**Try it:** https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+**Try it:** https://legislation-rand-gamma-clinic.trycloudflare.com
 
 **Why I built it:** The #1 pain point I see on GitHub issues is MCP servers failing to install/connect. This removes the guesswork.
 
@@ -34,7 +34,7 @@ MCP (Model Context Protocol) servers let AI assistants connect to external tools
 
 I built MCP Workbench to solve this. It's a zero-config web interface where you paste a server command and immediately see available tools, test them, and get compatibility reports.
 
-**Live demo:** https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+**Live demo:** https://legislation-rand-gamma-clinic.trycloudflare.com
 
 **Features:**
 - Visual tool discovery and parameter inspection
@@ -56,7 +56,7 @@ I'm looking for beta testers — especially developers building custom MCP serve
 
 Hey builders! I made MCP Workbench — a web UI to test MCP servers without touching the terminal.
 
-🔗 Live: https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+🔗 Live: https://legislation-rand-gamma-clinic.trycloudflare.com
 
 What you get:
 ✅ Connect to any MCP server in seconds
