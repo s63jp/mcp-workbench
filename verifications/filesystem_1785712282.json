@@ -1,0 +1,72 @@
+{
+  "server_name": "filesystem",
+  "timestamp": "2026-08-02T23:11:16Z",
+  "overall_status": "verified",
+  "startup_passed": true,
+  "startup_duration_ms": 1339.84,
+  "startup_errors": [
+    "Usage: mcp-server-filesystem [allowed-directory] [additional-directories...]\nNote: Allowed directories can be provided via:\n  1. Command-line arguments (shown above)\n  2. MCP roots protocol (if client supports it)\nAt least one directory must be provided by EITHER method for the server to operate.\nSecure MCP Filesystem Server running on stdio\nStarted without allowed directories - waiting for client to provide roots via MCP protocol\n"
+  ],
+  "discovery_passed": true,
+  "discovery_duration_ms": 5.59,
+  "tool_count": 14,
+  "tools": [
+    "read_file",
+    "read_text_file",
+    "read_media_file",
+    "read_multiple_files",
+    "write_file",
+    "edit_file",
+    "create_directory",
+    "list_directory",
+    "list_directory_with_sizes",
+    "directory_tree",
+    "move_file",
+    "search_files",
+    "get_file_info",
+    "list_allowed_directories"
+  ],
+  "tool_call_results": [
+    {
+      "tool": "read_file",
+      "passed": true,
+      "duration_ms": 3.13,
+      "response_type": "dict"
+    },
+    {
+      "tool": "read_text_file",
+      "passed": true,
+      "duration_ms": 1.17,
+      "response_type": "dict"
+    },
+    {
+      "tool": "read_media_file",
+      "passed": true,
+      "duration_ms": 1.19,
+      "response_type": "dict"
+    }
+  ],
+  "tool_calls_passed": 3,
+  "tool_calls_failed": 0,
+  "performance": {
+    "startup_ms": 1339.84,
+    "discovery_ms": 5.59,
+    "tools_per_second": 2504.47,
+    "total_test_duration_ms": 1351.15
+  },
+  "security": {
+    "command_used": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-filesystem"
+    ],
+    "process_pid": 820719,
+    "notes": "Full sandbox audit requires gVisor integration (Phase 4)"
+  },
+  "stability": {
+    "process_alive": true,
+    "test_duration_ms": 1351.15
+  },
+  "evidence_path": "",
+  "logs": []
+}
