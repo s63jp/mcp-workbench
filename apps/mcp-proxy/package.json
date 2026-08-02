@@ -1,0 +1,22 @@
+{
+  "name": "@mcp-workbench/mcp-proxy",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cloudflare Worker MCP proxy — WebSocket-to-stdio bridge for MCP servers",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "types": "tsc --noEmit",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.6.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240800.0",
+    "typescript": "^5.5.0",
+    "wrangler": "^3.0.0"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "timestamp": "2026-08-02T18:42:02Z",
+  "total": 7,
+  "passed": 4,
+  "failed": 3,
+  "tests": [
+    {
+      "name": "Filesystem Server",
+      "passed": true,
+      "duration_ms": 1484.32,
+      "error": null,
+      "logs": [
+        "Sent init",
+        "Initialize response: {\"type\": \"message\", \"payload\": {\"result\": {\"protocolVersion\": \"2024-11-05\", \"capabilities\": {\"tools\": {\"listChanged\": tr",
+        "Sent notifications/initialized",
+        "Tools list: {\"type\": \"message\", \"payload\": {\"result\": {\"tools\": [{\"name\": \"read_file\", \"title\": \"Read File (Deprecated)\", \"descripti",
+        "Discovered 14 tools",
+        "Tool call result: {\"type\": \"message\", \"payload\": {\"result\": {\"content\": [{\"type\": \"text\", \"text\": \"[DIR] .ICE-unix\\n[FILE] .X0-lock\\n[DIR]",
+        "Disconnecting..."
+      ]
+    },
+    {
+      "name": "Time Server",
+      "passed": false,
+      "duration_ms": 924.7,
+      "error": "ConnectionClosedOK: received 1000 (OK); then sent 1000 (OK)\nTraceback (most recent call last):\n  File \"/home/kali/mcp-workbench/tests/integration_test.py\", line 40, in run_mcp_test\n    msg = json.loads(await asyncio.wait_for(ws.recv(), timeout=10.0))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/asyncio/tasks.py\", line 507, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/home/kali/anonchat-backend/venv/lib/python3.13/site-packages",
+      "logs": [
+        "Sent init"
+      ]
+    },
+    {
+      "name": "SQLite Server",
+      "passed": false,
+      "duration_ms": 936.7,
+      "error": "ConnectionClosedOK: received 1000 (OK); then sent 1000 (OK)\nTraceback (most recent call last):\n  File \"/home/kali/mcp-workbench/tests/integration_test.py\", line 40, in run_mcp_test\n    msg = json.loads(await asyncio.wait_for(ws.recv(), timeout=10.0))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/asyncio/tasks.py\", line 507, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/home/kali/anonchat-backend/venv/lib/python3.13/site-packages",
+      "logs": [
+        "Sent init"
+      ]
+    },
+    {
+      "name": "Fetch Server",
+      "passed": false,
+      "duration_ms": 911.66,
+      "error": "ConnectionClosedOK: received 1000 (OK); then sent 1000 (OK)\nTraceback (most recent call last):\n  File \"/home/kali/mcp-workbench/tests/integration_test.py\", line 40, in run_mcp_test\n    msg = json.loads(await asyncio.wait_for(ws.recv(), timeout=10.0))\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.13/asyncio/tasks.py\", line 507, in wait_for\n    return await fut\n           ^^^^^^^^^\n  File \"/home/kali/anonchat-backend/venv/lib/python3.13/site-packages",
+      "logs": [
+        "Sent init"
+      ]
+    },
+    {
+      "name": "GitHub Server",
+      "passed": true,
+      "duration_ms": 1200.34,
+      "error": null,
+      "logs": [
+        "Sent init",
+        "Initialize response: {\"type\": \"message\", \"payload\": {\"result\": {\"protocolVersion\": \"2024-11-05\", \"capabilities\": {\"tools\": {}}, \"serverInfo\":",
+        "Sent notifications/initialized",
+        "Tools list: {\"type\": \"message\", \"payload\": {\"result\": {\"tools\": [{\"name\": \"create_or_update_file\", \"description\": \"Create or update ",
+        "Discovered 26 tools",
+        "Disconnecting..."
+      ]
+    },
+    {
+      "name": "Memory Server",
+      "passed": true,
+      "duration_ms": 1341.9,
+      "error": null,
+      "logs": [
+        "Sent init",
+        "Initialize response: {\"type\": \"message\", \"payload\": {\"result\": {\"protocolVersion\": \"2024-11-05\", \"capabilities\": {\"tools\": {\"listChanged\": tr",
+        "Sent notifications/initialized",
+        "Tools list: {\"type\": \"message\", \"payload\": {\"result\": {\"tools\": [{\"name\": \"create_entities\", \"title\": \"Create Entities\", \"descriptio",
+        "Discovered 9 tools",
+        "Disconnecting..."
+      ]
+    },
+    {
+      "name": "Security: Reject Forbidden Command",
+      "passed": true,
+      "duration_ms": 5.44,
+      "error": null,
+      "logs": [
+        "Response: {\"type\": \"error\", \"message\": \"Command 'bash' not allowed\"}"
+      ]
+    }
+  ]
+}

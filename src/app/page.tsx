@@ -27,6 +27,8 @@ const PRESETS = [
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState(0);
   const [expandedTool, setExpandedTool] = useState<string | null>(null);
+  const [toolResults, setToolResults] = useState<Record<string, { status: "idle" | "loading" | "success" | "error"; output: string }>>({});
+  const [paramValues, setParamValues] = useState<Record<string, Record<string, string>>>({});
   const [logs, setLogs] = useState<LogEntry[]>([
     { time: new Date().toLocaleTimeString(), level: "info", message: "MCP Workbench initialized. Ready to connect." },
   ]);
@@ -285,20 +287,45 @@ export default function HomePage() {
                         {expandedTool === tool.name && (
                           <div className="px-4 py-3 border-t border-border bg-background/50">
                             <p className="text-sm text-muted mb-3">{tool.description}</p>
-                            <div className="space-y-2">
+                            <div className="space-y-3 mb-3">
                               {tool.params.map((p) => (
-                                <div key={p.name} className="flex items-start gap-3">
-                                  <div className="flex-1">
-                                    <div className="flex items-center gap-2 mb-1">
-                                      <span className="font-mono text-xs text-primary">{p.name}</span>
-                                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-border text-muted">{p.type}</span>
-                                      {p.required && <span className="text-[10px] px-1.5 py-0.5 rounded bg-danger/10 text-danger">required</span>}
-                                    </div>
-                                    <p className="text-xs text-muted">{p.description}</p>
+                                <div key={p.name}>
+                                  <div className="flex items-center gap-2 mb-1">
+                                    <span className="font-mono text-xs text-primary">{p.name}</span>
+                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-border text-muted">{p.type}</span>
+                                    {p.required && <span className="text-[10px] px-1.5 py-0.5 rounded bg-danger/10 text-danger">required</span>}
                                   </div>
+                                  <p className="text-xs text-muted mb-1">{p.description}</p>
+                                  <input
+                                    type="text"
+                                    placeholder={p.type === "string" ? `"value"` : p.type === "number" ? "0" : "{}"}
+                                    value={paramValues[tool.name]?.[p.name] || ""}
+                                    onChange={(e) => setParamValues((prev) => ({ ...prev, [tool.name]: { ...(prev[tool.name] || {}), [p.name]: e.target.value } }))}
+                                    className="w-full bg-background border border-border rounded-md px-2 py-1 text-xs font-mono focus:outline-none focus:border-primary transition-colors"
+                                  />
                                 </div>
                               ))}
                             </div>
+                            <button
+                              onClick={() => {
+                                setToolResults((prev) => ({ ...prev, [tool.name]: { status: "loading", output: "" } }));
+                                setTimeout(() => {
+                                  const result = { tool: tool.name, params: paramValues[tool.name] || {}, timestamp: new Date().toISOString(), result: { success: true, message: `Executed ${tool.name} successfully.` } };
+                                  setToolResults((prev) => ({ ...prev, [tool.name]: { status: "success", output: JSON.stringify(result, null, 2) } }));
+                                  addLog("success", `Tool ${tool.name} executed successfully`);
+                                }, 800);
+                              }}
+                              className="text-xs px-3 py-1.5 rounded-md bg-primary text-white hover:bg-primary-hover transition-colors flex items-center gap-1.5 mb-3"
+                              disabled={toolResults[tool.name]?.status === "loading"}
+                            >
+                              <Play size={10} fill="currentColor" /> {toolResults[tool.name]?.status === "loading" ? "Calling..." : "Call Tool"}
+                            </button>
+                            {toolResults[tool.name]?.status === "success" && (
+                              <pre className="text-[10px] bg-background border border-border rounded-md p-2 font-mono text-success overflow-x-auto">{toolResults[tool.name].output}</pre>
+                            )}
+                            {toolResults[tool.name]?.status === "error" && (
+                              <pre className="text-[10px] bg-background border border-border rounded-md p-2 font-mono text-danger overflow-x-auto">{toolResults[tool.name].output}</pre>
+                            )}
                           </div>
                         )}
                       </div>
