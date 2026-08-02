@@ -230,6 +230,38 @@ async def api_sessions(request):
             with open(os.path.join("sessions", fn)) as f: sessions.append(json.load(f))
     return web.json_response({"count": len(sessions), "sessions": sessions})
 
+# ─── Beta Signup API ─────────────────────────────────────────────
+async def api_beta_signup(request):
+    try:
+        data = await request.json()
+        email = data.get("email", "").strip()
+        servers = data.get("servers", "").strip()
+        tools = data.get("tools", "")
+        feature = data.get("feature", "").strip()
+        
+        if not email or "@" not in email:
+            return web.json_response({"error": "Valid email required"}, status=400)
+        
+        signup = {
+            "email": email,
+            "servers": servers,
+            "tools": tools,
+            "feature": feature,
+            "date": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "ip": request.remote
+        }
+        
+        os.makedirs("beta-signups", exist_ok=True)
+        filename = os.path.join("beta-signups", f"{email.replace('@', '_AT_').replace('.', '_')}_{int(time.time())}.json")
+        with open(filename, "w") as f:
+            json.dump(signup, f, indent=2)
+        
+        slog("beta.signup", email=email, servers=servers, tools=tools)
+        return web.json_response({"success": True, "message": "Thanks! We'll email you within 24 hours."})
+    except Exception as e:
+        slog("beta.error", error=str(e))
+        return web.json_response({"error": str(e)}, status=500)
+
 async def static_handler(request):
     path = request.match_info.get("path", "")
     filepath = os.path.join(STATIC_DIR, path.lstrip("/"))
@@ -340,6 +372,7 @@ async def main():
     app.router.add_get("/api/health", api_health)
     app.router.add_get("/api/metrics", api_metrics)
     app.router.add_get("/api/sessions", api_sessions)
+    app.router.add_post("/api/beta-signup", api_beta_signup)
     app.router.add_get("/ws", ws_handler)
     app.router.add_get("/{path:.*}", static_handler)
 

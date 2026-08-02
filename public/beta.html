@@ -184,12 +184,27 @@
             e.preventDefault();
             const form = new FormData(e.target);
             const data = Object.fromEntries(form);
-            // Store in localStorage for now (no backend yet)
-            let signups = JSON.parse(localStorage.getItem('mcp-signups') || '[]');
-            signups.push({...data, date: new Date().toISOString()});
-            localStorage.setItem('mcp-signups', JSON.stringify(signups));
-            document.getElementById('success').style.display = 'block';
-            e.target.reset();
+            try {
+                const res = await fetch('/api/beta-signup', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    document.getElementById('success').textContent = '✅ ' + result.message;
+                    document.getElementById('success').style.display = 'block';
+                    e.target.reset();
+                } else {
+                    document.getElementById('success').textContent = '❌ ' + (result.error || 'Something went wrong');
+                    document.getElementById('success').style.color = '#f87171';
+                    document.getElementById('success').style.display = 'block';
+                }
+            } catch (err) {
+                document.getElementById('success').textContent = '❌ Network error: ' + err.message;
+                document.getElementById('success').style.color = '#f87171';
+                document.getElementById('success').style.display = 'block';
+            }
         });
     </script>
 </body>
