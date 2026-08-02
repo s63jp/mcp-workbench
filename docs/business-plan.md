@@ -4,7 +4,8 @@
 > **Date:** August 2026 
 > **Status:** Launched (MVP live)
 > **Budget:** £0 (bootstrapped)
-> **Public URL:** https://depth-plenty-mia-similarly.trycloudflare.com
+> **Public URL:** https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+> ⚠️ Note: Cloudflare quick tunnel URLs are temporary and will change on restart.
 
 ---
 
