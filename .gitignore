@@ -10,3 +10,4 @@ sessions/
 .idea/
 .pytest_cache/
 logs/
+.github_env
