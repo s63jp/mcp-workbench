@@ -125,12 +125,13 @@ export default function HomePage() {
 
             // Handle tool call results
             if (payload.id && payload.id >= 2 && payload.result) {
-              // Tool call responses have ids >= 2
-              const toolName = Object.keys(toolResults).find((k) => toolResults[k]?.status === "loading") || "tool";
+              const toolName = (ws as any).__pendingToolCall || Object.keys(toolResults).find((k) => toolResults[k]?.status === "loading") || "tool";
+              (ws as any).__pendingToolCall = null;
               setToolResults((prev) => ({
                 ...prev,
                 [toolName]: { status: "success", output: JSON.stringify(payload.result, null, 2) },
               }));
+              addLog("success", `Tool ${toolName} responded`);
             }
           }
         } catch (e) {
@@ -375,11 +376,21 @@ export default function HomePage() {
                             <button
                               onClick={() => {
                                 setToolResults((prev) => ({ ...prev, [tool.name]: { status: "loading", output: "" } }));
-                                setTimeout(() => {
-                                  const result = { tool: tool.name, params: paramValues[tool.name] || {}, timestamp: new Date().toISOString(), result: { success: true, message: `Executed ${tool.name} successfully.` } };
-                                  setToolResults((prev) => ({ ...prev, [tool.name]: { status: "success", output: JSON.stringify(result, null, 2) } }));
-                                  addLog("success", `Tool ${tool.name} executed successfully`);
-                                }, 800);
+                                if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
+                                  setToolResults((prev) => ({ ...prev, [tool.name]: { status: "error", output: "WebSocket not connected" } }));
+                                  return;
+                                }
+                                const callId = Date.now();
+                                const params = paramValues[tool.name] || {};
+                                const callPayload = {
+                                  jsonrpc: "2.0", id: callId,
+                                  method: "tools/call",
+                                  params: { name: tool.name, arguments: params },
+                                };
+                                // Track pending call
+                                (wsRef.current as any).__pendingToolCall = tool.name;
+                                wsRef.current.send(JSON.stringify(callPayload));
+                                addLog("info", `Calling tool ${tool.name}...`);
                               }}
                               className="text-xs px-3 py-1.5 rounded-md bg-primary text-white hover:bg-primary-hover transition-colors flex items-center gap-1.5 mb-3"
                               disabled={toolResults[tool.name]?.status === "loading"}
@@ -401,8 +412,16 @@ export default function HomePage() {
               )}
 
               {activeTab === 2 && (
-                <div className="p-4 font-mono text-xs">
-                  <pre className="text-muted">{config.status === "connected" ? JSON.stringify({ jsonrpc: "2.0", id: 1, result: { protocolVersion: "2024-11-05", capabilities: { tools: {}, resources: {}, prompts: {} }, serverInfo: { name: "mcp-workbench-demo", version: "0.1.0" } } }, null, 2) : "Connect to a server to view raw JSON-RPC traffic."}</pre>
+                <div className="p-4 font-mono text-xs h-96 overflow-y-auto">
+                  {config.status === "connected" ? (
+                    logs.map((log, i) => (
+                      <div key={i} className={`mb-1 ${log.level === "error" ? "text-danger" : log.level === "success" ? "text-success" : "text-muted"}`}>
+                        <span className="opacity-50">[{log.time}]</span> {log.message.slice(0, 300)}
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-muted">Connect to a server to view raw JSON-RPC traffic.</p>
+                  )}
                 </div>
               )}
             </div>
