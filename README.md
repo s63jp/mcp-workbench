@@ -1,99 +1,91 @@
-# MCP Workbench
+# 🔧 MCP Workbench
 
-> The Postman for Model Context Protocol servers.
+> A web-based testing platform for MCP servers — think "Postman for MCP"
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Overview
+## What is MCP?
 
-MCP Workbench is a web-based platform for testing, validating, and debugging [Model Context Protocol](https://modelcontextprotocol.io) (MCP) servers. Stop wrestling with config files and start shipping.
+MCP (Model Context Protocol) is Anthropic's open protocol that lets AI assistants connect to external tools and data sources. As of August 2026, there are 1000+ community MCP servers, but testing and debugging them is painful.
 
-## Features
+## Our Solution
 
-- **Instant Validation** — Connect to any MCP server and validate tools/schemas in seconds
-- **Compatibility Reports** — See which clients support your server (Claude, Cursor, VS Code, etc.)
-- **Saved Configurations** — Store, version, and share MCP server configs
-- **CI/CD Integration** — Webhook-based regression testing
-- **Raw JSON-RPC** — Inspect every message for complete transparency
+**MCP Workbench** gives you a visual, zero-config web interface to:
 
-## Tech Stack
+- ✅ Connect to any MCP server instantly
+- ✅ See available tools and their schemas
+- ✅ Test tool calls with parameters
+- ✅ Debug with a live JSON-RPC console
+- ✅ Get compatibility reports
+
+**No terminal. No config files. No cryptic stdio errors.**
+
+## 🚀 Live Demo
+
+**Try it now:** https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+
+**Beta signup:** https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com/beta.html
+
+## 📸 Screenshot
+
+*(Coming soon — add screenshot when UI is polished)*
+
+## 🏗️ Tech Stack
 
 - **Frontend:** Next.js 16 + React 19 + TypeScript + Tailwind CSS v4
-- **Backend:** Cloudflare Worker (Hono) + Durable Objects — WebSocket-to-stdio MCP proxy
-- **Deployment:** Static export (Vercel / GitHub Pages / Cloudflare Pages) for frontend; Cloudflare Workers for backend
-- **Icons:** Lucide React
+- **Backend:** Python aiohttp + WebSocket MCP proxy
+- **Deployment:** Cloudflare Tunnel (temporary) → Vercel (soon)
 
-## Getting Started
-
-### Frontend
+## 🛠️ Local Development
 
 ```bash
+# Clone
+git clone https://github.com/s63jp/mcp-workbench.git
+cd mcp-workbench
+
+# Install dependencies
 npm install
+
+# Start the Python MCP proxy server
+python3 server.py 3460
+
+# In another terminal, start the frontend
 npm run dev
+
+# Or use the Cloudflare tunnel for public access
+cloudflared tunnel --url http://localhost:3460
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+## 📋 Roadmap
 
-### MCP Proxy (Cloudflare Worker)
+- [x] MVP with basic MCP connection
+- [x] Beta signup landing page
+- [x] WebSocket proxy for real-time testing
+- [ ] User accounts and saved configurations
+- [ ] Compatibility reports (Claude, Cursor, VS Code)
+- [ ] Team workspaces
+- [ ] CI/CD webhook integration
+- [ ] Public MCP server directory
 
-```bash
-cd apps/mcp-proxy
-npm install
-npx wrangler dev
-```
+## 🤝 Contributing
 
-The proxy exposes:
+We're looking for beta testers! If you build with Claude, Cursor, or VS Code + MCP:
 
-- `POST /connect` — start an MCP server session (returns `sessionId` and `wsUrl`)
-- `GET /rpc` — upgrade to WebSocket and bridge JSON-RPC messages
-- `POST /disconnect` — kill the session and its child process
+1. Try the [live demo](https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com)
+2. [Sign up for beta access](https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com/beta.html)
+3. Open an issue with feedback
 
-## Architecture
+**Early adopters get free lifetime Pro access!**
 
-```
-┌──────────────┐        POST /connect        ┌─────────────────────────┐
-│              │ ──────────────────────────▶ │                         │
-│  Next.js     │        WS /rpc              │  Cloudflare Worker      │
-│  (static)    │ ◀─────── WebSocket ───────▶ │  (Hono + Durable Obj)   │
-│              │        POST /disconnect     │                         │
-└──────────────┘ ──────────────────────────▶ │                         │
-                                              └───────────┬─────────────┘
-                                                          │ spawn()
-                                                          ▼
-                                              ┌─────────────────────────┐
-                                              │  MCP Server (stdio)     │
-                                              │  e.g. npx @mcp/server-… │
-                                              └─────────────────────────┘
-```
+## 📄 License
 
-## Build
+MIT License — see [LICENSE](LICENSE) file
 
-```bash
-npm run build
-# Output in ./dist
-```
+## 🐦 Follow Us
 
-## Deploy
+- X/Twitter: [@Gizmo50009](https://x.com/Gizmo50009)
+- Email: gizmo50009@agentmail.ai
 
-### Frontend
+---
 
-#### Vercel (recommended)
-```bash
-npx vercel --prod
-```
-
-#### GitHub Pages
-```bash
-npm run build
-# Push dist/ to gh-pages branch
-```
-
-### Backend (MCP Proxy)
-```bash
-cd apps/mcp-proxy
-npx wrangler deploy
-```
-
-## License
-
-MIT © MCP Workbench
+*Built with ❤️ by MCP Workbench — £0 bootstrapped, fully autonomous AI business*
