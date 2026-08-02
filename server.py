@@ -118,7 +118,38 @@ async def drain_stderr(proc, session: str):
         text = line.decode("utf-8", errors="replace").rstrip()
         if text: log(session, f"[stderr] {text}")
 
-# ─── HTTP Handlers ──────────────────────────────────────────────
+# ─── Active Process Tracking ──────────────────────────────────────
+active_processes: dict[str, asyncio.subprocess.Process] = {}
+
+async def cleanup_orphaned_processes():
+    """Kill any lingering MCP processes from previous sessions."""
+    import signal
+    import psutil
+    for proc in psutil.process_iter(["pid", "name", "cmdline"]):
+        try:
+            cmdline = proc.info["cmdline"] or []
+            if any("@modelcontextprotocol" in str(c) for c in cmdline):
+                os.kill(proc.info["pid"], signal.SIGKILL)
+                log("cleanup", f"Killed orphaned MCP process {proc.info['pid']}")
+        except (psutil.NoSuchProcess, PermissionError, ProcessLookupError):
+            pass
+
+def track_process(session: str, proc):
+    active_processes[session] = proc
+
+def untrack_process(session: str):
+    active_processes.pop(session, None)
+
+async def kill_all_active():
+    """Kill all active MCP processes on shutdown."""
+    for session, proc in list(active_processes.items()):
+        try:
+            proc.kill()
+            await asyncio.wait_for(proc.wait(), timeout=5.0)
+            log("shutdown", f"Killed PID {proc.pid}")
+        except Exception:
+            pass
+    active_processes.clear()
 async def api_health(request):
     return web.json_response({"status": "ok", "timestamp": __import__("time").time()})
 
@@ -169,6 +200,7 @@ async def ws_handler(request):
             metrics.record_connection(False); metrics.record_error(err); return ws
 
         proc = await spawn_mcp(command, args, env)
+        track_process(session, proc)
         log(session, f"PID {proc.pid} started")
         stderr_task = asyncio.create_task(drain_stderr(proc, session))
 
@@ -219,8 +251,17 @@ async def ws_handler(request):
         recorder.save(); metrics.record_connection(conn_success)
         if stderr_task: stderr_task.cancel()
         if proc:
-            try: proc.kill(); await proc.wait(); log(session, f"PID {proc.pid} terminated")
+            try:
+                proc.kill()
+                await asyncio.wait_for(proc.wait(), timeout=5.0)
+                log(session, f"PID {proc.pid} terminated")
+            except asyncio.TimeoutError:
+                log(session, f"PID {proc.pid} kill timeout — forcing SIGKILL")
+                try: os.kill(proc.pid, signal.SIGKILL)
+                except ProcessLookupError: pass
             except Exception: pass
+            finally:
+                untrack_process(session)
         log(session, "Disconnected")
         if not ws.closed: await ws.close()
 

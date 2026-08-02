@@ -14,7 +14,7 @@ from typing import Optional
 
 import websockets
 
-WS_URI = "ws://localhost:3461"
+WS_URI = "ws://localhost:3460/ws"  # Updated for aiohttp unified server
 
 
 @dataclass
