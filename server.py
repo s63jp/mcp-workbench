@@ -58,13 +58,24 @@ class Session:
         self.transition("closing")
         if self.process:
             try:
-                self.process.kill()
-                await asyncio.wait_for(self.process.wait(), timeout=5.0)
+                # Kill entire process group to catch npx-spawned children
+                try: os.killpg(os.getpgid(self.process.pid), signal.SIGKILL)
+                except (ProcessLookupError, OSError): pass
+                # Also kill direct PID
+                try: os.kill(self.process.pid, signal.SIGKILL)
+                except ProcessLookupError: pass
+                # Kill any remaining children via psutil
+                try:
+                    parent = psutil.Process(self.process.pid)
+                    for child in parent.children(recursive=True):
+                        try: child.kill()
+                        except psutil.NoSuchProcess: pass
+                    parent.kill()
+                except psutil.NoSuchProcess: pass
+                await asyncio.wait_for(self.process.wait(), timeout=3.0)
                 slog("process.terminated", self.session_id, pid=self.process.pid)
             except asyncio.TimeoutError:
                 slog("process.kill_timeout", self.session_id, pid=self.process.pid)
-                try: os.kill(self.process.pid, signal.SIGKILL)
-                except ProcessLookupError: pass
             except Exception as e:
                 slog("process.kill_error", self.session_id, error=str(e))
             finally:
@@ -170,10 +181,12 @@ async def spawn_mcp(command: str, args: list, env: dict | None = None):
     merged_env = {**dict(os.environ), **(env or {})}
     merged_env.setdefault("PYTHONUNBUFFERED", "1")
     merged_env.setdefault("NODE_NO_WARNINGS", "1")
+    # start_new_session=True creates a new process group for reliable cleanup
+    kwargs = {"start_new_session": True} if sys.platform != "win32" else {}
     return await asyncio.create_subprocess_exec(
         command, *[str(a) for a in args],
         stdin=asyncio.subprocess.PIPE, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE,
-        env=merged_env,
+        env=merged_env, **kwargs,
     )
 
 async def read_jsonrpc_lines(stream):
