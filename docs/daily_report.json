@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-02T17:24:28.929055+00:00Z",
+  "timestamp": "2026-08-02T18:23:00.396386+00:00Z",
   "site": {
-    "ok": false,
-    "status": 404,
-    "latency_ms": 128.99,
-    "error": "HTTPError 404: Not Found"
+    "ok": true,
+    "status": 200,
+    "latency_ms": 247.95,
+    "error": null
   },
   "github_trends": {
-    "searched_at": "2026-08-02T17:24:28.843126+00:00Z",
+    "searched_at": "2026-08-02T18:23:00.130818+00:00Z",
     "topics": [
       {
         "name": "mcp",
