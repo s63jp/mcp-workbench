@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   Play, Square, Terminal, CheckCircle, XCircle, Zap,
   Shield, Server, GitBranch, ChevronDown, ChevronUp,
@@ -42,63 +42,129 @@ export default function HomePage() {
     setLogs((prev) => [...prev.slice(-99), { time: new Date().toLocaleTimeString(), level, message }]);
   }, []);
 
+  const wsRef = useRef<WebSocket | null>(null);
+
+  const getWsUrl = () => {
+    const proto = window.location.protocol === "https:" ? "wss:" : "ws:";
+    return `${proto}//${window.location.host}/ws`;
+  };
+
+  const parseInputSchema = (schema: any): ToolParam[] => {
+    if (!schema || schema.type !== "object" || !schema.properties) return [];
+    return Object.entries(schema.properties).map(([name, prop]: [string, any]) => ({
+      name,
+      type: prop.type || "string",
+      required: (schema.required || []).includes(name),
+      description: prop.description || "",
+    }));
+  };
+
   const handleConnect = useCallback(() => {
-    if (config.status === "connecting") return;
-    setConfig((c) => ({ ...c, status: "connecting", message: "Initializing transport...", tools: [] }));
+    if (config.status === "connecting" || config.status === "connected") return;
+    setConfig((c) => ({ ...c, status: "connecting", message: "Opening WebSocket...", tools: [] }));
+    setToolResults({});
     addLog("info", `Connecting: ${commandInput} ${argsInput}`);
 
-    setTimeout(() => {
-      addLog("info", "Spawning stdio transport...");
-    }, 400);
-    setTimeout(() => {
-      addLog("info", "Sending initialize request...");
-    }, 800);
-    setTimeout(() => {
-      addLog("success", "Initialize response received. Protocol version: 2024-11-05");
-    }, 1200);
-    setTimeout(() => {
-      addLog("info", "Listing available tools...");
-    }, 1600);
-    setTimeout(() => {
-      const demoTools: Tool[] = [
-        {
-          name: "list_directory",
-          description: "List files and directories within a given path",
-          params: [
-            { name: "path", type: "string", required: true, description: "Directory path to list" },
-          ],
-        },
-        {
-          name: "read_file",
-          description: "Read the full contents of a file",
-          params: [
-            { name: "path", type: "string", required: true, description: "Path of file to read" },
-          ],
-        },
-        {
-          name: "write_file",
-          description: "Create a new file or overwrite an existing file",
-          params: [
-            { name: "path", type: "string", required: true, description: "Path for the file" },
-            { name: "content", type: "string", required: true, description: "Content to write" },
-          ],
-        },
-        {
-          name: "search_files",
-          description: "Recursively search for files and directories matching a pattern",
-          params: [
-            { name: "path", type: "string", required: true, description: "Root directory to search" },
-            { name: "pattern", type: "string", required: true, description: "Search pattern" },
-          ],
-        },
-      ];
-      setConfig((c) => ({ ...c, status: "connected", message: `Connected. ${demoTools.length} tools discovered.`, tools: demoTools }));
-      addLog("success", `Server ready. ${demoTools.length} tools available.`);
-    }, 2200);
-  }, [commandInput, argsInput, config.status, addLog]);
+    try {
+      const ws = new WebSocket(getWsUrl());
+      wsRef.current = ws;
+      let initReceived = false;
+      let toolsReceived = false;
+
+      ws.onopen = () => {
+        addLog("success", "WebSocket connected");
+        const args = argsInput.trim().split(/\s+/);
+        ws.send(JSON.stringify({ command: commandInput, args }));
+        addLog("info", `Spawning: ${commandInput} ${argsInput}`);
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const msg = JSON.parse(event.data);
+
+          if (msg.type === "error") {
+            addLog("error", msg.message);
+            setConfig((c) => ({ ...c, status: "error", message: msg.message }));
+            ws.close();
+            return;
+          }
+
+          if (msg.type === "message" && msg.payload) {
+            const payload = msg.payload;
+            addLog("info", JSON.stringify(payload).slice(0, 200));
+
+            // Handle initialize response
+            if (payload.id === 0 && payload.result && !initReceived) {
+              initReceived = true;
+              const proto = payload.result.protocolVersion || "unknown";
+              addLog("success", `Initialize response received. Protocol version: ${proto}`);
+              ws.send(JSON.stringify({ jsonrpc: "2.0", method: "notifications/initialized" }));
+              addLog("info", "Sending notifications/initialized...");
+              // Request tools list
+              ws.send(JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/list" }));
+              addLog("info", "Listing available tools...");
+            }
+
+            // Handle tools/list response
+            if (payload.id === 1 && payload.result && !toolsReceived) {
+              toolsReceived = true;
+              const rawTools = payload.result.tools || [];
+              const mappedTools: Tool[] = rawTools.map((t: any) => ({
+                name: t.name,
+                description: t.description || "",
+                params: parseInputSchema(t.inputSchema),
+              }));
+              setConfig((c) => ({
+                ...c,
+                status: "connected",
+                message: `Connected. ${mappedTools.length} tools discovered.`,
+                tools: mappedTools,
+              }));
+              addLog("success", `Server ready. ${mappedTools.length} tools available.`);
+            }
+
+            // Handle tool call results
+            if (payload.id && payload.id >= 2 && payload.result) {
+              // Tool call responses have ids >= 2
+              const toolName = Object.keys(toolResults).find((k) => toolResults[k]?.status === "loading") || "tool";
+              setToolResults((prev) => ({
+                ...prev,
+                [toolName]: { status: "success", output: JSON.stringify(payload.result, null, 2) },
+              }));
+            }
+          }
+        } catch (e) {
+          addLog("error", `Failed to parse message: ${String(e)}`);
+        }
+      };
+
+      ws.onerror = () => {
+        addLog("error", "WebSocket error. Is the proxy running?");
+        setConfig((c) => ({ ...c, status: "error", message: "Connection failed. Ensure the MCP Workbench server is running." }));
+      };
+
+      ws.onclose = () => {
+        if (!initReceived) {
+          addLog("warn", "Connection closed before initialization completed.");
+        } else {
+          addLog("info", "Connection closed.");
+        }
+        setConfig((c) => (c.status === "connected" ? { ...c, status: "idle", message: "", tools: [] } : c));
+        wsRef.current = null;
+      };
+    } catch (e) {
+      addLog("error", `Connection error: ${String(e)}`);
+      setConfig((c) => ({ ...c, status: "error", message: String(e) }));
+    }
+  }, [commandInput, argsInput, config.status, addLog, toolResults]);
 
   const handleDisconnect = useCallback(() => {
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+    }
     setConfig((c) => ({ ...c, status: "idle", message: "", tools: [] }));
+    setToolResults({});
     addLog("info", "Connection closed.");
   }, [addLog]);
 
