@@ -1,3 +1,0 @@
-module.exports=[27572,a=>{"use strict";var b=a.i(7997);a.s(["default",0,function({children:a}){return(0,b.jsx)("html",{lang:"en",children:(0,b.jsx)("body",{className:"antialiased min-h-screen",children:a})})},"metadata",0,{title:"MCP Workbench — Test, Validate & Debug MCP Servers",description:"The Postman for Model Context Protocol servers. Connect, test tools, validate compatibility, and share configs with your team."}])},50645,a=>{a.n(a.i(27572))}];
-
-//# sourceMappingURL=src_app_layout_tsx_0r5yz5t._.js.map
