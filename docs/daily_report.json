@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-08-02T17:24:28.929055+00:00Z",
+  "site": {
+    "ok": false,
+    "status": 404,
+    "latency_ms": 128.99,
+    "error": "HTTPError 404: Not Found"
+  },
+  "github_trends": {
+    "searched_at": "2026-08-02T17:24:28.843126+00:00Z",
+    "topics": [
+      {
+        "name": "mcp",
+        "display_name": "MCP"
+      },
+      {
+        "name": "mcp-server",
+        "display_name": "MCP Server"
+      },
+      {
+        "name": "mcp-client",
+        "display_name": null
+      },
+      {
+        "name": "mcp-tools",
+        "display_name": null
+      },
+      {
+        "name": "mcp-security",
+        "display_name": null
+      }
+    ]
+  }
+}

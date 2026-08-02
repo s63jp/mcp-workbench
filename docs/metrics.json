@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "project": "MCP Workbench",
+    "description": "Daily metrics dashboard snapshot"
+  },
+  "metrics": {
+    "visitors": {
+      "today": 0,
+      "yesterday": 0,
+      "this_week": 0,
+      "this_month": 0,
+      "all_time": 0
+    },
+    "signups": {
+      "today": 0,
+      "yesterday": 0,
+      "this_week": 0,
+      "this_month": 0,
+      "all_time": 0
+    },
+    "connections": {
+      "today": 0,
+      "yesterday": 0,
+      "this_week": 0,
+      "this_month": 0,
+      "all_time": 0
+    },
+    "conversions": {
+      "today": 0,
+      "yesterday": 0,
+      "this_week": 0,
+      "this_month": 0,
+      "all_time": 0
+    }
+  },
+  "updated_at": "2026-08-02T00:00:00Z",
+  "total_checks": 1,
+  "site_checks": 1,
+  "last_check": "2026-08-02T18:24:15.510484",
+  "site_uptime_pct": 100.0
+}

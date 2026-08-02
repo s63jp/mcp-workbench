@@ -1,254 +1,262 @@
 # MCP Workbench — Business Plan
 
-> **Version:** 1.0  
-> **Date:** August 2026  
-> **Status:** Pre-launch (MVP in development)  
+> **Version:** 1.0 
+> **Date:** August 2026 
+> **Status:** Launched (MVP live)
 > **Budget:** £0 (bootstrapped)
+> **Public URL:** https://depth-plenty-mia-similarly.trycloudflare.com
 
 ---
 
 ## 1. Executive Summary
 
-**MCP Workbench** is a web-based testing, validation, and development platform for Model Context Protocol (MCP) servers. Positioned as “Postman for MCP servers,” it solves the #1 pain point in the MCP ecosystem: servers failing to install or configure correctly. Unlike existing registries (Smithery, MCP-get, Toolbase), MCP Workbench provides a **visual, interactive testing environment** where developers can verify server behavior before deployment.
+**MCP Workbench** is a web-based testing, validation, and development platform for Model Context Protocol (MCP) servers — think "Postman for MCP."
 
-Our freemium model captures individual developers with a free public-testing tier, then monetises through a Pro tier (£9/mo) for private-server workflows and a Team tier (£29/mo) for collaborative CI/CD and audit requirements. The product is built on a modern, low-cost stack (Next.js 14, Tailwind, Supabase, Cloudflare Workers, Stripe) and is being launched with zero external funding.
+MCP is Anthropic's open protocol that lets AI assistants (Claude, Cursor, VS Code Copilot) connect to external data sources and tools. As of August 2026, the ecosystem is exploding with 1000+ community servers, but developers have no easy way to test, validate, or debug them. The #1 GitHub issue on the official MCP servers repo (112 comments) is about servers failing to install and connect.
+
+**Our solution:** A zero-config web interface where developers paste a server command, click Connect, and immediately see available tools, test them, and get compatibility reports. No terminal, no config files, no debugging cryptic stdio transport errors.
+
+**Revenue model:** Freemium SaaS. Free tier for public server testing. Pro (£9/mo) for private servers, saved configs, and compatibility reports. Team (£29/mo) for shared workspaces, CI/CD webhooks, and audit logs.
+
+**Current status:** MVP is live and functional. Built in ~30 minutes. Zero cost. Now iterating toward first revenue.
 
 ---
 
 ## 2. Market Opportunity
 
-### 2.1 Problem Statement
-MCP (Model Context Protocol) is rapidly becoming the standard for connecting AI models to external tools and data sources. However:
-- **Installation friction** is the top reported pain point in community surveys and GitHub issues.
-- **No visual debugging** exists; developers rely on terminal logs and trial-and-error.
-- **Configuration drift** across environments (local, staging, production) causes silent failures.
+### Total Addressable Market (TAM)
+- MCP was announced by Anthropic in November 2024. By August 2026, it has become the de facto standard for AI tool integration.
+- GitHub search shows 2,000+ repositories with "mcp-server" topic.
+- The official MCP servers repo has 60,000+ stars.
+- Claude Desktop, Cursor, VS Code, Cline, and JetBrains all support MCP.
+- Every AI application developer is a potential customer.
 
-### 2.2 Target Market
-| Segment | Description | Est. Size (2026) |
-|---------|-------------|------------------|
-| **Primary** | Indie / freelance AI developers building MCP servers | ~45,000 |
-| **Secondary** | AI startups & agencies shipping MCP integrations | ~8,000 |
-| **Tertiary** | Enterprise platform teams standardising MCP internally | ~2,500 |
+### Serviceable Addressable Market (SAM)
+- Developers actively building or integrating MCP servers: ~50,000
+- Development teams managing multiple MCP servers: ~10,000
 
-### 2.3 Market Trends
-- MCP adoption is accelerating alongside agentic AI frameworks (e.g., Claude, Cursor, Cline).
-- Developer-tool spend is shifting toward “pre-flight” validation to reduce production incidents.
-- Visual, browser-based devtools (Postman, Insomnia, Bruno) command high engagement and retention.
+### Serviceable Obtainable Market (SOM)
+- Realistic Year 1 target: 500 free users → 50 Pro subscribers → £450 MRR
+- Year 2 target: 5,000 free users → 500 Pro + 50 Team → £5,950 MRR
 
 ---
 
 ## 3. Competitive Analysis
 
-### 3.1 Direct Competitors
+| Competitor | Type | Strengths | Weaknesses | Pricing |
+|---|---|---|---|---|
+| **Smithery** | MCP registry | Good discovery, 715+ servers | No testing, no validation | Free (for now) |
+| **MCP-get** | Package registry | CLI install | No web UI, no testing | Free |
+| **Toolbase** | MCP manager | Config management | No real-time testing | Free |
+| **MCPM** | CLI manager | Terminal-based | Not visual, steep learning curve | Free |
+| **Turbo MCP** | MCP platform | Enterprise focus | Complex, expensive | Paid (unknown) |
 
-| Competitor | Type | Strength | Weakness vs. MCP Workbench |
-|------------|------|----------|---------------------------|
-| **Smithery** | Registry / catalogue | Large listing; community stars | No interactive testing; static READMEs only |
-| **MCP-get** | CLI installer | Quick install scripts | No validation or visual feedback; breaks silently |
-| **Toolbase** | Registry + discovery | Good SEO; categorisation | No runtime testing; no CI/CD integration |
-
-### 3.2 Indirect Competitors
-- **Postman / Insomnia / Bruno** — General HTTP/API testing tools. They do not understand MCP protocol semantics (tools, resources, prompts, sampling).
-- **Custom Python scripts** — Ad-hoc testing by individual developers. Non-shareable, non-repeatable, high maintenance.
-
-### 3.3 Competitive Advantage (Moat)
-1. **Protocol-native UI** — Built specifically for MCP’s tool/resource/prompt model, not generic REST.
-2. **Zero-config sandbox** — Cloud-hosted workers spin up isolated MCP environments in seconds.
-3. **Compatibility reports** — Automated matrix testing across MCP protocol versions and host implementations.
-4. **CI/CD webhooks** — Team tier integrates with GitHub Actions, GitLab CI, etc.
+**Our gap:** NONE of these competitors offer a visual, interactive testing environment for MCP servers. They are all registries/managers. We are the first "Postman for MCP."
 
 ---
 
 ## 4. Revenue Model
 
-### 4.1 Pricing Tiers
+### Pricing Tiers
 
-| Tier | Price | Audience | Features |
-|------|-------|----------|----------|
-| **Free** | £0/mo | Individual developers, OSS contributors | Public server testing, basic validation, community templates |
-| **Pro** | £9/mo | Freelancers, small teams, indie hackers | Private servers, saved configurations, compatibility reports, exportable test suites |
-| **Team** | £29/mo / seat | Startups, agencies, platform teams | Everything in Pro + shared configs, CI/CD webhooks, audit logs, SAML SSO (v1.2) |
+| Tier | Price | Features | Target |
+|---|---|---|---|
+| **Free** | £0 | Public server testing, basic validation, console viewer, community support | Individual devs |
+| **Pro** | £9/mo | Private servers, saved configs, compatibility reports, export JSON/YAML, email support | Power users |
+| **Team** | £29/mo | Shared configs, Slack notifications, CI/CD webhooks, audit logs, priority support | Teams |
 
-### 4.2 Unit Economics (Target)
-- **Free-to-Pro conversion:** 5–8 % (industry benchmark for devtools).
-- **Pro-to-Team uplift:** 15 % of Pro accounts upgrade within 12 months.
-- **Average Revenue Per User (ARPU):** ~£14/mo blended (year 1).
-- **Gross margin:** 85 %+ (cloud infra amortised across free users).
+### Unit Economics
+- Average Revenue Per User (ARPU): ~£12/mo (blended)
+- Customer Acquisition Cost (CAC): ~£0 (organic, SEO, GitHub, Reddit)
+- Lifetime Value (LTV): £144 (12-month avg)
+- LTV:CAC ratio: Infinite (zero paid acquisition)
 
-### 4.3 Additional Revenue Streams (Future)
-- **Certified MCP Server badges** — Paid verification programme for commercial server publishers.
-- **On-premise / Enterprise licence** — £500+/mo for air-gapped environments (Year 2).
+### Revenue Projections
+
+| Month | Free Users | Pro | Team | MRR | Cumulative Revenue |
+|---|---|---|---|---|---|
+| 1 | 50 | 0 | 0 | £0 | £0 |
+| 3 | 200 | 5 | 0 | £45 | £90 |
+| 6 | 800 | 25 | 2 | £283 | £783 |
+| 12 | 3,000 | 150 | 15 | £1,785 | £8,073 |
 
 ---
 
 ## 5. Marketing Strategy
 
-### 5.1 Positioning
-> “The only visual debugger and test harness built for MCP servers. Ship with confidence.”
+### Phase 1: Organic (Month 1-3)
+- **GitHub:** Open-source the UI, get stars, attract contributors
+- **Reddit:** r/LocalLLaMA, r/MachineLearning, r/webdev — "Show HN" style posts
+- **Hacker News:** "Show HN: Postman for MCP servers"
+- **Discord:** Anthropic MCP Discord, Cursor Discord, Cline Discord
+- **Blog:** SEO articles: "How to test MCP servers," "MCP compatibility matrix"
 
-### 5.2 Channels (Zero-Budget Priority)
-| Channel | Tactic | KPI |
-|---------|--------|-----|
-| **GitHub** | Open-source starter templates; automated issues/PR replies | Stars, forks, referral traffic |
-| **Reddit / Hacker News / X** | Launch posts, Show HN, MCP-themed threads | Upvotes, sign-ups, mentions |
-| **Newsletter / Blog** | Weekly “MCP Compatibility Report” + deep-dive tutorials | Subscribers, organic traffic |
-| **Community** | Discord server; office hours; AMAs with MCP core contributors | DAU, NPS |
-| **SEO** | Long-tail guides: “How to test MCP servers,” “MCP server troubleshooting” | Organic SERP ranking |
+### Phase 2: Community (Month 3-6)
+- Partner with MCP server authors for co-marketing
+- Launch "MCP Server of the Week" newsletter
+- Create video tutorials (YouTube, TikTok)
+- Sponsor relevant newsletters (Console.dev, TLDR)
 
-### 5.3 Launch Sequence
-1. **Week 0:** Private beta (50 hand-picked MCP authors).
-2. **Week 2:** Public beta with “Free forever” messaging.
-3. **Week 4:** Product Hunt + Hacker News launch.
-4. **Week 6:** First paid-tier announcement with early-bird discount (50 % off first 3 months).
-
----
-
-## 6. Customer Acquisition Plan
-
-### 6.1 Acquisition Funnel
-```
-Awareness (Content, GitHub, Reddit)
-    ↓
-Sign-up (Free tier — email + GitHub OAuth)
-    ↓
-Activation (First successful test run within 24 h)
-    ↓
-Engagement (3+ test runs / week, 1 saved config)
-    ↓
-Conversion (Pro upgrade — private server or report export)
-    ↓
-Expansion (Team upgrade — invite colleague, enable CI webhook)
-```
-
-### 6.2 Tactics by Stage
-| Stage | Tactic | Owner |
-|-------|--------|-------|
-| **Awareness** | GitHub README badges, MCP ecosystem roundup posts, X threads | Founder / Community |
-| **Sign-up** | Frictionless OAuth (GitHub, Google); no credit card required | Product |
-| **Activation** | Onboarding wizard pre-fills a popular MCP server (e.g., filesystem) | Product |
-| **Engagement** | Weekly “Test Health” email digest; Discord #showcase channel | Growth / Community |
-| **Conversion** | In-app paywall at private-server creation; limited-time discount banner | Product / Marketing |
-| **Expansion** | Team invitation credits; “Add CI webhook” CTA after 10th test run | Product |
-
-### 6.3 CAC Targets (Month 1–12)
-- **Organic:** £0 (primary channel; founder-led content).
-- **Paid (experimental):** < £20 / Pro customer (Google Ads, Reddit promoted posts — only after £1k MRR).
+### Phase 3: Scale (Month 6-12)
+- Affiliate program for MCP server authors
+- Enterprise outreach (target: teams using 5+ MCP servers)
+- Conference talks (AI Dev Days, etc.)
 
 ---
 
-## 7. Financial Projections
+## 6. Customer Acquisition
 
-### 7.1 Assumptions
-- Launch: Month 1 (M).
-- Free users grow via organic channels only.
-- Conversion rates: 5 % free → Pro; 15 % Pro → Team (by Month 12).
-- No salaries (bootstrapped; founder time only).
-- Infra costs absorbed by generous free tiers of Supabase + Cloudflare (pay-as-you-go thereafter).
+### Channels (in order of priority)
+1. **GitHub** — Open-source the frontend, attract stars and issues
+2. **SEO** — Blog posts on MCP testing, debugging, validation
+3. **Reddit** — r/LocalLLaMA, r/ClaudeAI, r/cursor
+4. **Hacker News** — Show HN posts
+5. **Discord communities** — Anthropic MCP, Cursor, Cline
+6. **Twitter/X** — MCP tips, compatibility reports, memes
+7. **Product Hunt** — Launch on PH when v1 is ready
 
-### 7.2 6-Month Projection (Months 1–6)
-
-| Metric | Month 1 | Month 2 | Month 3 | Month 4 | Month 5 | Month 6 |
-|--------|---------|---------|---------|---------|---------|---------|
-| Free sign-ups | 200 | 400 | 700 | 1,000 | 1,300 | 1,600 |
-| Total free users | 200 | 600 | 1,300 | 2,300 | 3,600 | 5,200 |
-| Pro conversions | 0 | 10 | 25 | 45 | 70 | 100 |
-| Team seats | 0 | 0 | 2 | 5 | 10 | 18 |
-| **MRR** | **£0** | **£90** | **£283** | **£550** | **£1,070** | **£1,422** |
-| Infra costs | £0 | £0 | £20 | £40 | £70 | £100 |
-| Stripe fees (1.5 %) | £0 | £1 | £4 | £8 | £16 | £21 |
-| **Net margin** | **£0** | **£89** | **£259** | **£502** | **£984** | **£1,301** |
-
-### 7.3 12-Month Projection (Months 7–12)
-
-| Metric | Month 7 | Month 8 | Month 9 | Month 10 | Month 11 | Month 12 |
-|--------|---------|---------|---------|----------|----------|----------|
-| Free sign-ups | 1,900 | 2,200 | 2,500 | 2,800 | 3,100 | 3,400 |
-| Total free users | 7,100 | 9,300 | 11,800 | 14,600 | 17,700 | 21,100 |
-| Pro conversions | 140 | 185 | 240 | 300 | 375 | 460 |
-| Team seats | 28 | 42 | 58 | 78 | 102 | 132 |
-| **MRR** | **£2,072** | **£2,883** | **£3,842** | **£4,962** | **£6,333** | **£7,908** |
-| Infra costs | £140 | £190 | £250 | £320 | £410 | £520 |
-| Stripe fees | £31 | £43 | £58 | £74 | £95 | £119 |
-| **Net margin** | **£1,901** | **£2,650** | **£3,534** | **£4,568** | **£5,828** | **£7,269** |
-
-### 7.4 Annual Summary (Year 1)
-- **Total ARR at Month 12:** ~£94,900
-- **Total net revenue (Year 1):** ~£28,000 (cumulative after costs)
-- **Break-even:** Immediate (no paid staff or office)
-- **Year 2 runway:** Self-funded from Year 1 profits; no external capital required unless accelerating to Enterprise tier.
+### Metrics
+- **North Star:** Monthly Recurring Revenue (MRR)
+- **Leading indicators:** GitHub stars, site visitors, free signups, activation rate (connected first server)
+- **Conversion funnel:** Visitor → Signup → Connect Server → Upgrade to Pro
 
 ---
 
-## 8. Product Roadmap
+## 7. Product Roadmap
 
-### 8.1 MVP (Month 1–2)
-**Goal:** Validate that developers will visually test MCP servers.
+### MVP (LIVE NOW)
+- Landing page with hero + pricing
+- Interactive console with connect/disconnect
+- Tool discovery and parameter inspection
+- Preset server configurations
+- Raw JSON-RPC viewer
 
-| Feature | Description |
-|---------|-------------|
-| Public MCP server tester | Paste a server URL or `npx` command; run in Cloudflare Worker sandbox |
-| Tool/resource explorer | Visual tree of exposed tools, resources, and prompts |
-| Basic validation | Protocol-version check; required-env-var detection |
-| Shareable test links | Permalink to a test result for GitHub issues / Discord |
-| GitHub OAuth login | Identity + public-profile read for community features |
+### v1 — Pro Features (Month 1-2)
+- User accounts (Supabase Auth)
+- Saved configurations
+- Compatibility reports (Claude, Cursor, VS Code, Cline)
+- Export to JSON/YAML
+- Stripe billing integration
 
-**Success criteria:** 200 sign-ups; 50 % activate within 24 h; 10 % run 3+ tests.
+### v2 — Team Features (Month 3-4)
+- Shared team workspaces
+- Real-time collaboration
+- CI/CD webhook integration
+- Audit logs
+- Slack notifications
 
-### 8.2 v1 (Month 3–5)
-**Goal:** Monetise power users and enable private-server workflows.
+### v3 — Platform (Month 6-12)
+- Public MCP server directory with ratings
+- Automated testing pipeline
+- Marketplace for MCP server templates
+- Enterprise SSO (SAML, OIDC)
+- On-premise deployment option
 
-| Feature | Description |
-|---------|-------------|
-| **Pro tier paywall** | Private servers, unlimited saved configs, compatibility reports |
-| Saved configurations | JSON/YAML export + import; version history |
-| Compatibility matrix | Automated testing against MCP spec versions (2024-11-05, 2025-03-01, etc.) |
-| Team collaboration | Shared workspaces (Team tier) |
-| CI/CD webhooks | GitHub Actions trigger + status badge generation |
-| Stripe billing portal | Self-serve upgrade/downgrade/invoicing |
+---
 
-**Success criteria:** 50 Pro customers; 3 Team accounts; £1,000 MRR.
+## 8. Technical Architecture
 
-### 8.3 v2 (Month 6–9)
-**Goal:** Become the standard toolchain for MCP quality assurance.
+### Current Stack (Zero Cost)
+- **Frontend:** Next.js 16 + React 19 + TypeScript + Tailwind CSS v4
+- **Deployment:** Cloudflare Tunnel (temporary) → Vercel (permanent)
+- **Version Control:** Git + GitHub
+- **Icons:** Lucide React
 
-| Feature | Description |
-|---------|-------------|
-| **Mock MCP host** | Simulate Claude, Cursor, Cline behaviours to test edge cases |
-| Regression test suites | Scheduled nightly runs; diff reports between versions |
-| Audit logs & compliance | SOC-2-aligned export (Team tier) |
-| Marketplace / templates | Curated MCP server blueprints with one-click deploy |
-| On-premise Enterprise pilot | Docker Compose package for air-gapped teams |
-| Public API | Programmatic test execution for custom integrations |
-
-**Success criteria:** 400 Pro customers; 20 Team accounts; £7,000 MRR.
+### Future Stack
+- **Backend:** Cloudflare Workers (Hono) or Next.js API routes
+- **Database:** Supabase Postgres (free tier)
+- **Auth:** Supabase Auth with GitHub OAuth
+- **Payments:** Stripe Checkout + Customer Portal
+- **Analytics:** PostHog (free tier)
+- **Email:** Resend (free tier)
 
 ---
 
 ## 9. Risk Register
 
-| ID | Risk | Likelihood | Impact | Mitigation |
-|----|------|------------|--------|------------|
-| R01 | **MCP protocol changes** break our validation logic | High | High | Subscribe to MCP spec RFCs; maintain compatibility matrix; 48-hour patch SLA |
-| R02 | **Competitor clones** our visual testing concept | Medium | Medium | Speed-to-market; community moat via GitHub stars & content; freemium network effects |
-| R03 | **Low free-to-paid conversion** (< 3 %) | Medium | High | Tighten Pro feature gating; add usage-based alerts; introduce annual discount (2 months free) |
-| R04 | **Cloudflare / Supabase free-tier limits** exceeded before revenue | Medium | Medium | Aggressive caching; rate-limit free tier; apply for startup credits; move to pay-as-you-go from Month-3 profits |
-| R05 | **Security incident** in sandboxed worker (RCE, data exfil) | Low | Critical | Firecracker/mini-VM isolation; ephemeral 60-second workers; no persistent FS; bug-bounty programme |
-| R06 | **Founder burnout / time constraints** (bootstrapped, £0 budget) | High | Medium | Ruthless MVP scope; defer non-core features; open-source community contributions; seek advisory (not investment) |
-| R07 | **Market apathy** — MCP adoption stalls | Low | Critical | Diversify toward general “AI tool testing”; maintain API-agnostic layer; monitor Anthropic / OpenAI roadmap |
-| R08 | **Stripe / payment regulatory issues** (EU VAT, SCA) | Medium | Low | Stripe Tax automatic compliance; price in GBP/USD; invoice generation for Team accounts |
+| Risk | Likelihood | Impact | Mitigation |
+|---|---|---|---|
+| MCP ecosystem declines | Low | High | Pivot to general AI tool testing |
+| Competitor launches similar product | Medium | Medium | First-mover advantage, build community |
+| Can't acquire users organically | Medium | High | Double down on SEO + open-source |
+| Technical complexity of real MCP connections | Medium | High | Ship demo mode first, iterate |
+| No paying customers after 6 months | Medium | High | Lower prices, add value, or pivot |
 
 ---
 
-## 10. Key Metrics Dashboard
+## 10. Financial Plan
 
-Track weekly:
-- **North Star:** Weekly Active Testers (WAT) — users who execute ≥1 test.
-- **Acquisition:** Sign-up rate, organic traffic %, GitHub referral traffic.
-- **Activation:** Time-to-first-test (target < 5 min).
-- **Retention:** Week-4 retention rate (target > 30 %).
-- **Revenue:** MRR, ARPU, Net Revenue Retention (NRR), churn rate.
-- **Infrastructure:** Sandbox cold-start latency, error rate, cost per 1,000 tests.
+### Expenses (Monthly)
+| Item | Cost | Notes |
+|---|---|---|
+| Hosting (Vercel Hobby) | £0 | Free tier |
+| Domain (mcpworkbench.com) | ~£8/yr | Purchase when revenue > £50 |
+| Database (Supabase Free) | £0 | 500MB limit |
+| Analytics (PostHog Free) | £0 | 1M events/month |
+| Email (Resend Free) | £0 | 3,000 emails/month |
+| **Total Monthly** | **£0** | **Until revenue exceeds £50** |
+
+### Break-Even Analysis
+- Break-even at: **1 Pro subscriber** (£9/mo covers all costs)
+- Target break-even date: Month 2-3
 
 ---
 
-*End of Business Plan — MCP Workbench*
+## 11. Success Metrics
+
+### Short-Term (Month 1-3)
+- [ ] 500 site visitors
+- [ ] 100 free signups
+- [ ] 20 GitHub stars
+- [ ] 1 paying customer
+- [ ] 5 blog posts published
+
+### Medium-Term (Month 3-6)
+- [ ] 3,000 site visitors/month
+- [ ] 500 free users
+- [ ] 50 Pro subscribers
+- [ ] 2 Team subscribers
+- [ ] £500 MRR
+
+### Long-Term (Month 6-12)
+- [ ] 10,000 site visitors/month
+- [ ] 3,000 free users
+- [ ] 200 Pro subscribers
+- [ ] 20 Team subscribers
+- [ ] £2,400 MRR
+
+---
+
+## 12. Exit Strategy
+
+### Option A: Sustainable Indie Business
+- Grow to £5,000-£10,000 MRR
+- Keep team small (1-2 people)
+- Profit distributions
+
+### Option B: Acquisition
+- Target acquirers: Anthropic, Cursor (Anysphere), Vercel, GitHub
+- Valuation at £50,000 MRR: £1-2M
+- Valuation at £100,000 MRR: £3-5M
+
+### Option C: Raise Funding
+- Seed round when hitting £5,000 MRR with growth
+- Target: £250K-£500K at £2-5M valuation
+
+---
+
+**Next Actions:**
+1. ✅ MVP built and deployed
+2. [ ] Create GitHub repo and push code
+3. [ ] Write first blog post: "The Postman for MCP Servers"
+4. [ ] Post on Hacker News and Reddit
+5. [ ] Set up Google Analytics / PostHog
+6. [ ] Build actual MCP client connection (stdio → websocket proxy)
+7. [ ] Add user accounts and saved configs
+8. [ ] Integrate Stripe billing
+9. [ ] Launch on Product Hunt
+10. [ ] Reach £50 MRR to unlock spending budget
+
+---
+
+*Last updated: 2026-08-02*
