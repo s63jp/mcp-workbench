@@ -1,5 +1,8 @@
 # MCP Workbench Documentation
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 ## Overview
 
 MCP Workbench is a web-based MCP server testing, validation, and development platform. Think "Postman for MCP Servers."

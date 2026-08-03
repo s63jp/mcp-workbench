@@ -1,5 +1,8 @@
 # MCP Workbench — Cold Email Outreach Targets
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 ## 🎯 MCP Server Authors (Found via GitHub)
 
 | Name | GitHub | Email | Company | Relevance |

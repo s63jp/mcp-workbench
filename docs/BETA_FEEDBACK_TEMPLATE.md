@@ -1,5 +1,8 @@
 # Beta Tester Feedback Template
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 Thank you for testing MCP Workbench. Your feedback will directly shape v0.2.
 
 **Tester:** _______________________

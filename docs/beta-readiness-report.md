@@ -1,5 +1,8 @@
 # MCP Workbench v0.1.0-beta — Beta Readiness Report
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 **Date:** 2026-08-02
 **Public URL:** https://series-forwarding-converted-juice.trycloudflare.com
 **Repository:** /home/kali/mcp-workbench

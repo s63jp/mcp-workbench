@@ -1,5 +1,8 @@
 # Reddit Post Draft — r/LocalLLaMA
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 **Title:** [Showoff Sunday] MCP Workbench — A web UI to test MCP servers (no terminal needed)
 
 **Body:**

@@ -1,5 +1,8 @@
 # MCP Workbench Server Failure Report
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 **Date:** 2026-08-02
 **Incident:** Apparent server instability
 **Status:** Misdiagnosed — server was stable

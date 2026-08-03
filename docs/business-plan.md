@@ -1,5 +1,8 @@
 # MCP Workbench — Business Plan
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 > **Version:** 1.0 
 > **Date:** August 2026 
 > **Status:** Launched (MVP live)

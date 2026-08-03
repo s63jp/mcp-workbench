@@ -1,5 +1,8 @@
 # Known Issues — MCP Workbench v0.1.0-beta
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 **Last updated:** 2026-08-02
 **Status:** Closed beta
 

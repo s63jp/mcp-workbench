@@ -1,5 +1,8 @@
 # MCP Workbench — Beta Tester Recruitment
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 ## What We're Building
 
 **MCP Workbench** is a web-based testing platform for Model Context Protocol (MCP) servers — think "Postman for MCP."

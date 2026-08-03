@@ -1,5 +1,8 @@
 # MCP Workbench — Vision Document 2.0
 
+**GitHub:** https://github.com/s63jp/mcp-workbench
+
+
 > From "Postman for MCP" to "AI Operating System for MCP"
 
 ## The Elevator Pitch
