@@ -230,23 +230,30 @@ async def api_analytics(request):
     """Return basic analytics about server usage."""
     try:
         # Count beta signups
-        signup_count = len([f for f in os.listdir("beta-signups") if f.endswith(".json")])
-        
+        signup_count = 0
+        if os.path.isdir("beta-signups"):
+            try:
+                signup_count = len([f for f in os.listdir("beta-signups") if f.endswith(".json")])
+            except Exception as e:
+                slog("analytics.signup_count_error", error=str(e))
+
         # Count active sessions (last 24 hours)
         active_sessions = 0
         cutoff = time.time() - 86400
-        for f in os.listdir("sessions"):
-            if f.endswith(".json"):
-                try:
-                    session_path = os.path.join("sessions", f)
-                    if os.path.getmtime(session_path) > cutoff:
-                        active_sessions += 1
-                except:
-                    continue
-        
+        if os.path.isdir("sessions"):
+            for f in os.listdir("sessions"):
+                if f.endswith(".json"):
+                    try:
+                        session_path = os.path.join("sessions", f)
+                        if os.path.getmtime(session_path) > cutoff:
+                            active_sessions += 1
+                    except Exception as e:
+                        slog("analytics.session_count_error", file=f, error=str(e))
+                        continue
+
         # Get server uptime
         uptime = time.time() - app_start_time
-        
+
         return web.json_response({
             "success": True,
             "data": {
@@ -257,7 +264,7 @@ async def api_analytics(request):
             }
         })
     except Exception as e:
-        slog("analytics.error", error=str(e))
+        slog("analytics.error", error=str(e), stack=traceback.format_exc())
         return web.json_response({"error": "Internal server error"}, status=500)
 
 async def api_signup_count(request):
@@ -284,6 +291,12 @@ async def api_beta_signup(request):
         servers = data.get("servers", "").strip()
         tools = data.get("tools", "").strip()
         feature = data.get("feature", "").strip()
+        honeypot = data.get("honeypot", "").strip()  # Bot trap
+        
+        # Honeypot check
+        if honeypot:
+            slog("beta.honeypot", email=email, ip=request.remote)
+            return web.json_response({"success": True, "message": "Thanks! We'll email you within 24 hours."})  # Fake success
         
         # Input validation
         if not email or "@" not in email or "." not in email.split("@")[-1]:
@@ -298,27 +311,58 @@ async def api_beta_signup(request):
         if len(safe_email) > 100:  # Prevent overly long filenames
             safe_email = safe_email[:100]
             
+        # Sanitize inputs (basic XSS protection)
+        def sanitize(text):
+            return text.replace("<", "&lt;").replace(">", "&gt;")
+        
         signup = {
             "email": email,
-            "servers": servers,
-            "tools": tools,
-            "feature": feature,
+            "servers": sanitize(servers),
+            "tools": sanitize(tools),
+            "feature": sanitize(feature),
             "date": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "ip": request.remote,
-            "user_agent": request.headers.get("User-Agent", "")
+            "user_agent": request.headers.get("User-Agent", ""),
+            "timestamp": int(time.time())  # For analytics
         }
         
         os.makedirs("beta-signups", exist_ok=True)
         filename = os.path.join("beta-signups", f"{safe_email}_{int(time.time())}.json")
         
-        # Prevent duplicate signups from same IP in short time
-        recent_signups = [f for f in os.listdir("beta-signups") 
-                         if f.endswith(".json") and 
-                         (time.time() - os.path.getmtime(os.path.join("beta-signups", f))) < 300]
-        
-        if len(recent_signups) > 3:  # More than 3 signups in 5 minutes
+        # Prevent duplicate signups by email (case-insensitive)
+        email_lower = email.lower()
+        existing_signups = [f for f in os.listdir("beta-signups") 
+                           if f.endswith(".json")]
+        for f in existing_signups:
+            try:
+                with open(os.path.join("beta-signups", f)) as existing_file:
+                    existing_data = json.load(existing_file)
+                    if existing_data.get("email", "").lower() == email_lower:
+                        slog("beta.duplicate_email", email=email, ip=request.remote)
+                        return web.json_response({"error": "This email is already signed up."}, status=409)
+            except:
+                continue
+
+        # Rate limit by IP (5 signups per 5 minutes)
+        try:
+            recent_signups = [f for f in os.listdir("beta-signups") 
+                             if f.endswith(".json") and 
+                             (time.time() - os.path.getmtime(os.path.join("beta-signups", f))) < 300]
+        except Exception as e:
+            slog("beta.rate_limit_error", error=str(e))
+            return web.json_response({"error": "Internal server error"}, status=500)
+
+        if len(recent_signups) > 5:  # More than 5 signups in 5 minutes
             slog("beta.rate_limit", ip=request.remote, count=len(recent_signups))
             return web.json_response({"error": "Too many signups from this IP. Please try again later."}, status=429)
+
+        # Sanitize inputs
+        if len(servers) > 500:
+            return web.json_response({"error": "'servers' field too long"}, status=400)
+        if len(tools) > 500:
+            return web.json_response({"error": "'tools' field too long"}, status=400)
+        if len(feature) > 500:
+            return web.json_response({"error": "'feature' field too long"}, status=400)
         
         with open(filename, "w") as f:
             json.dump(signup, f, indent=2)

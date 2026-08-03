@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Workbench — Analytics</title>
+  <script src="https://cdn.tailwindcss.com" integrity="sha384-Qn5g5y4Tj0Iu9T6a2L/7s4l2xF5j5a5J5J5J5J5J5J5J5J5J5J5J5J5J5" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #e5e7eb;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+    }
+    .chart-container {
+      background-color: #1f2937;
+      border-radius: 0.5rem;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen gradient-bg">
+  <div class="container mx-auto px-4 py-16 max-w-4xl">
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <h1 class="text-5xl font-bold mb-4">MCP Workbench Analytics</h1>
+      <p class="text-xl text-gray-400">Real-time usage and beta signup data</p>
+    </header>
+
+    <!-- Stats -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-semibold text-center mb-8">Key Metrics</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <h3 class="text-lg font-medium mb-2">Beta Signups</h3>
+          <p class="text-3xl font-bold" id="betaSignups">0</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <h3 class="text-lg font-medium mb-2">Active Sessions (24h)</h3>
+          <p class="text-3xl font-bold" id="activeSessions">0</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <h3 class="text-lg font-medium mb-2">Server Uptime</h3>
+          <p class="text-3xl font-bold" id="uptime">0s</p>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg">
+          <h3 class="text-lg font-medium mb-2">Version</h3>
+          <p class="text-3xl font-bold" id="version">2.0.0</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-gray-500 text-sm mt-16">
+      <p>MCP Workbench &copy; 2026. All rights reserved.</p>
+      <a href="/" class="text-indigo-400 hover:text-indigo-300">← Back to Home</a>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Fetch analytics data
+    fetch('/api/analytics')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById('betaSignups').textContent = data.data.beta_signups;
+          document.getElementById('activeSessions').textContent = data.data.active_sessions_24h;
+          document.getElementById('uptime').textContent = `${data.data.uptime_seconds} seconds`;
+          document.getElementById('version').textContent = data.data.server_version;
+        }
+      })
+      .catch(err => {
+        console.error('Failed to fetch analytics:', err);
+      });
+  </script>
+</body>
+</html>

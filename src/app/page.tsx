@@ -241,6 +241,79 @@ export default function HomePage() {
           Connect, test, validate, and debug Model Context Protocol servers in seconds.
           No config files. No terminal gymnastics. Just point, click, and discover.
         </p>
+        
+        {/* Beta Signup Form */}
+        <div className="max-w-md mx-auto mb-8 p-6 rounded-xl border border-border bg-surface shadow-lg">
+          <h3 className="text-xl font-bold mb-2">Join the Beta</h3>
+          <p className="text-sm text-muted mb-4">
+            Sign up to test MCP Workbench — an autonomous SaaS for AI agents. Run cron jobs, social media, and monitoring overnight.
+          </p>
+          <form onSubmit={async (e) => {
+            e.preventDefault();
+            const form = e.target as HTMLFormElement;
+            const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+            const servers = (form.elements.namedItem("servers") as HTMLInputElement).value;
+            const tools = (form.elements.namedItem("tools") as HTMLInputElement).value;
+            const feature = (form.elements.namedItem("feature") as HTMLInputElement).value;
+            
+            try {
+              const res = await fetch("/api/beta-signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, servers, tools, feature }),
+              });
+              const data = await res.json();
+              if (data.success) {
+                addLog("success", `Beta signup successful! Total signups: ${data.count}`);
+                form.reset();
+                alert("Thanks! We'll email you within 24 hours.");
+              } else {
+                addLog("error", `Beta signup failed: ${data.error}`);
+                alert(data.error || "Signup failed. Please try again.");
+              }
+            } catch (err) {
+              addLog("error", `Beta signup error: ${String(err)}`);
+              alert("Network error. Please try again.");
+            }
+          }} className="space-y-3">
+            <input
+              name="email"
+              type="email"
+              placeholder="Your email"
+              required
+              className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary transition-colors"
+            />
+            <input
+              name="servers"
+              type="text"
+              placeholder="Which MCP servers do you use? (e.g., @modelcontextprotocol/server-filesystem)"
+              required
+              className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary transition-colors"
+            />
+            <input
+              name="tools"
+              type="text"
+              placeholder="What tools are you building? (optional)"
+              className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary transition-colors"
+            />
+            <input
+              name="feature"
+              type="text"
+              placeholder="What feature would make this a must-have for you? (optional)"
+              className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary transition-colors"
+            />
+            <button
+              type="submit"
+              className="w-full px-6 py-2.5 rounded-lg bg-primary text-white font-medium hover:bg-primary-hover transition-colors"
+            >
+              Sign Up for Beta
+            </button>
+          </form>
+          <p className="text-xs text-muted mt-3">
+            No spam. Unsubscribe anytime. <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+          </p>
+        </div>
+        
         <div className="flex items-center justify-center gap-3">
           <button className="px-6 py-2.5 rounded-xl bg-primary text-white font-medium hover:bg-primary-hover transition-colors flex items-center gap-2">
             <Play size={18} fill="currentColor" /> Launch Workbench

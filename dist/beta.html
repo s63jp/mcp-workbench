@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Workbench — Beta Signup</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .hero {
+            padding: 80px 20px 40px;
+            text-align: center;
+            background: radial-gradient(ellipse at top, #1a1a2e 0%, #0a0a0f 70%);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        .cta {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        .cta:hover { transform: translateY(-2px); }
+        .secondary {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        .features {
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature {
+            background: #141420;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #2a2a40;
+        }
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .signup {
+            padding: 60px 20px;
+            text-align: center;
+            background: #141420;
+            margin: 40px 0;
+        }
+        .signup h2 { margin-bottom: 30px; }
+        .form-group {
+            max-width: 400px;
+            margin: 15px auto;
+            text-align: left;
+        }
+        label { display: block; margin-bottom: 5px; color: #888; }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #2a2a40;
+            border-radius: 6px;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+        button[type="submit"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        .success { display: none; color: #4ade80; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🔧 MCP Workbench</h1>
+        <p>Zero-config MCP server testing in your browser. Think "Postman for MCP servers."</p>
+        <a href="/" class="cta">Try the MVP →</a>
+        <a href="#signup" class="cta secondary">Join Beta</a>
+    </div>
+
+    <div class="features">
+        <h2 style="text-align:center; margin-bottom: 10px;">What You'll Get</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>🧪 Test MCP Servers</h3>
+                <p>Connect to any MCP server in seconds. No terminal, no config files.</p>
+            </div>
+            <div class="feature">
+                <h3>🐛 Debug Visually</h3>
+                <p>See tool schemas, parameters, and responses in a clean UI.</p>
+            </div>
+            <div class="feature">
+                <h3>💾 Save Configs</h3>
+                <p>Store server configurations and switch between them instantly.</p>
+            </div>
+            <div class="feature">
+                <h3>📊 Compatibility Reports</h3>
+                <p>Check if your server works with Claude, Cursor, VS Code, and more.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="signup" id="signup">
+        <h2>Join the Beta</h2>
+        <p>We're looking for developers who work with MCP servers daily.</p>
+        <div id="signupCounter" style="margin: 20px 0; font-size: 1.1rem; color: #667eea;">
+            <span id="signupCount">0</span> developers have joined the beta so far
+        </div>
+        <form id="betaForm">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+                <label>What MCP server(s) do you use?</label>
+                <input type="text" name="servers" placeholder="e.g., filesystem, puppeteer, custom">
+            </div>
+            <div class="form-group">
+                <label>Your AI tools</label>
+                <select name="tools">
+                    <option>Claude Desktop</option>
+                    <option>Cursor</option>
+                    <option>VS Code + Cline</option>
+                    <option>VS Code + Copilot</option>
+                    <option>Other</option>
+                    <option>Multiple</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>What feature do you need most?</label>
+                <textarea name="feature" rows="3" placeholder="e.g., compatibility testing, team sharing, CI/CD..."></textarea>
+            </div>
+            <button type="submit">Apply for Beta Access</button>
+            <div class="success" id="success">✅ Thanks! We'll email you within 24 hours. You're beta tester #<span id="yourNumber"></span>!</div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('betaForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = new FormData(e.target);
+            const data = Object.fromEntries(form);
+            try {
+                const res = await fetch('/api/beta-signup', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    document.getElementById('success').textContent = '✅ ' + result.message + ' You\'re beta tester #' + result.count + '!';
+                    document.getElementById('success').style.display = 'block';
+                    document.getElementById('betaForm').style.display = 'none';
+                    loadSignupCount();
+                } else {
+                    document.getElementById('success').textContent = '❌ ' + (result.error || 'Something went wrong');
+                    document.getElementById('success').style.color = '#f87171';
+                    document.getElementById('success').style.display = 'block';
+                }
+            } catch (err) {
+                document.getElementById('success').textContent = '❌ Network error: ' + err.message;
+                document.getElementById('success').style.color = '#f87171';
+                document.getElementById('success').style.display = 'block';
+            }
+        });
+        
+        // Load signup count
+        async function loadSignupCount() {
+            try {
+                const response = await fetch('/api/signup-count');
+                const result = await response.json();
+                if (result.success) {
+                    document.getElementById('signupCount').textContent = result.count;
+                }
+            } catch (err) {
+                console.error('Failed to load signup count:', err);
+            }
+        }
+        
+        loadSignupCount();
+    </script>
+</body>
+</html>

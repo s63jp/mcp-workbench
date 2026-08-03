@@ -1,13 +1,13 @@
 {
-  "timestamp": "2026-08-02T18:23:00.396386+00:00Z",
+  "timestamp": "2026-08-03T08:00:02.277202+00:00Z",
   "site": {
-    "ok": true,
-    "status": 200,
-    "latency_ms": 247.95,
-    "error": null
+    "ok": false,
+    "status": null,
+    "latency_ms": null,
+    "error": "URLError: [Errno -2] Name or service not known"
   },
   "github_trends": {
-    "searched_at": "2026-08-02T18:23:00.130818+00:00Z",
+    "searched_at": "2026-08-03T08:00:01.961218+00:00Z",
     "topics": [
       {
         "name": "mcp",

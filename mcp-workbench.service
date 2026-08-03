@@ -1,0 +1,17 @@
+[Unit]
+Description=MCP Workbench Server
+After=network.target
+
+[Service]
+Type=simple
+User=kali
+WorkingDirectory=/home/kali/mcp-workbench
+ExecStart=/usr/bin/python3 /home/kali/mcp-workbench/server.py 3460
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

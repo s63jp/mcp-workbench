@@ -12,10 +12,34 @@
     "description": "Daily metrics dashboard snapshot"
   },
   "metrics": {
-    "visitors": {"today": 0, "yesterday": 0, "this_week": 0, "this_month": 0, "all_time": 0},
-    "signups": {"today": 0, "yesterday": 0, "this_week": 0, "this_month": 0, "all_time": 0},
-    "connections": {"today": 0, "yesterday": 0, "this_week": 0, "this_month": 0, "all_time": 0},
-    "conversions": {"today": 0, "yesterday": 0, "this_week": 0, "this_month": 0, "all_time": 0},
+    "visitors": {
+      "today": 0,
+      "yesterday": 0,
+      "this_week": 0,
+      "this_month": 0,
+      "all_time": 0
+    },
+    "signups": {
+      "today": 0,
+      "yesterday": 0,
+      "this_week": 0,
+      "this_month": 0,
+      "all_time": 0
+    },
+    "connections": {
+      "today": 0,
+      "yesterday": 0,
+      "this_week": 0,
+      "this_month": 0,
+      "all_time": 0
+    },
+    "conversions": {
+      "today": 0,
+      "yesterday": 0,
+      "this_week": 0,
+      "this_month": 0,
+      "all_time": 0
+    },
     "mrr_gbp": 0,
     "github_stars": 0,
     "site_checks": 2,
@@ -24,9 +48,29 @@
     "last_check": "2026-08-02T18:25:55.021773"
   },
   "targets": {
-    "month_1": {"visitors": 500, "signups": 100, "mrr": 0},
-    "month_3": {"visitors": 3000, "signups": 500, "mrr": 45},
-    "month_6": {"visitors": 10000, "signups": 2000, "mrr": 283},
-    "month_12": {"visitors": 30000, "signups": 5000, "mrr": 1785}
-  }
+    "month_1": {
+      "visitors": 500,
+      "signups": 100,
+      "mrr": 0
+    },
+    "month_3": {
+      "visitors": 3000,
+      "signups": 500,
+      "mrr": 45
+    },
+    "month_6": {
+      "visitors": 10000,
+      "signups": 2000,
+      "mrr": 283
+    },
+    "month_12": {
+      "visitors": 30000,
+      "signups": 5000,
+      "mrr": 1785
+    }
+  },
+  "total_checks": 1,
+  "site_checks": 0,
+  "last_check": "2026-08-03T09:00:18.564016",
+  "site_uptime_pct": 0.0
 }
