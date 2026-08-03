@@ -92,9 +92,9 @@ For servers that require API keys or secrets, Workbench supports environment var
 
 No signup required for basic testing. Connect a public MCP server and see the JSON-RPC traffic for yourself.
 
-🔗 [Launch MCP Workbench](https://blocked-skill-conviction-console.trycloudflare.com)
+🔗 [Launch MCP Workbench](https://mcp-workbench.uk)
 
-🔗 [Sign up for beta access](https://blocked-skill-conviction-console.trycloudflare.com/beta.html)
+🔗 [Sign up for beta access](https://mcp-workbench.uk/beta.html)
 
 ---
 

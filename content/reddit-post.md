@@ -2,7 +2,7 @@
 
 **TL;DR:** Built a free browser-based tool to connect, test, and debug MCP servers without wrestling with config files or restarting your chat client. Would love feedback from anyone building or integrating MCP servers.
 
-🔗 [https://depth-plenty-mia-similarly.trycloudflare.com](https://depth-plenty-mia-similarly.trycloudflare.com)
+🔗 [https://mcp-workbench.uk](https://mcp-workbench.uk)
 
 ---
 

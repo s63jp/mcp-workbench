@@ -41,7 +41,7 @@ A testing workbench isn't a nice-to-have. It's the infrastructure layer the ecos
 
 MCP Workbench is free to use. Connect a public MCP server, run your first validation, and see the JSON-RPC traffic for yourself. No signup required for basic testing.
 
-🔗 [Launch MCP Workbench](https://depth-plenty-mia-similarly.trycloudflare.com)
+🔗 [Launch MCP Workbench](https://mcp-workbench.uk)
 
 ---
 

@@ -1,7 +1,7 @@
 # MCP Workbench — Newsletter & Community Submissions
 
 > **Ready to copy-paste. Each pitch is customized for the publication's audience.**
-> **URLs:** Demo: `https://blocked-skill-conviction-console.trycloudflare.com` | Beta: `https://blocked-skill-conviction-console.trycloudflare.com/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
+> **URLs:** Demo: `https://mcp-workbench.uk` | Beta: `https://mcp-workbench.uk/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
 
 ---
 
@@ -33,9 +33,9 @@ Key features:
 Built for: Claude, Cursor, VS Code, Cline users
 
 Links:
-• Demo: https://blocked-skill-conviction-console.trycloudflare.com
+• Demo: https://mcp-workbench.uk
 • GitHub: https://github.com/s63jp/mcp-workbench
-• Beta: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+• Beta: https://mcp-workbench.uk/beta.html
 
 Happy to answer questions or provide a demo.
 
@@ -72,9 +72,9 @@ What makes it special:
 Target audience: Developers building with Claude, Cursor, VS Code + MCP
 
 Links:
-• Try it: https://blocked-skill-conviction-console.trycloudflare.com
+• Try it: https://mcp-workbench.uk
 • GitHub: https://github.com/s63jp/mcp-workbench
-• Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+• Beta signup: https://mcp-workbench.uk/beta.html
 
 Cheers,
 Gizmo
@@ -114,9 +114,9 @@ MCP is the de facto standard for AI tool integration (Claude, Cursor, VS Code, C
 Pricing: Free tier. Pro (£9/mo) for private servers and saved configs.
 
 Links:
-• Demo: https://blocked-skill-conviction-console.trycloudflare.com
+• Demo: https://mcp-workbench.uk
 • GitHub: https://github.com/s63jp/mcp-workbench
-• Beta: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+• Beta: https://mcp-workbench.uk/beta.html
 
 Thanks for considering it!
 
@@ -140,7 +140,7 @@ Gizmo
 | **Category** | Developer Tools |
 | **Use Case** | Testing, Debugging, Verification |
 | **Pricing** | Free (Pro tier coming) |
-| **Website URL** | `https://blocked-skill-conviction-console.trycloudflare.com` |
+| **Website URL** | `https://mcp-workbench.uk` |
 
 **Additional Notes for Submission:**
 ```
@@ -178,9 +178,9 @@ Console.dev readers love developer tools that remove friction. MCP Workbench eli
 Stack: Next.js 16, React 19, TypeScript, Tailwind CSS, Python asyncio, WebSocket
 
 Links:
-• Demo: https://blocked-skill-conviction-console.trycloudflare.com
+• Demo: https://mcp-workbench.uk
 • GitHub: https://github.com/s63jp/mcp-workbench
-• Beta: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+• Beta: https://mcp-workbench.uk/beta.html
 
 Open source, MIT licensed, £0 bootstrapped.
 
@@ -214,7 +214,7 @@ Technical highlights:
 For web developers building AI-powered apps with MCP integration, this removes a major friction point.
 
 Links:
-• Demo: https://blocked-skill-conviction-console.trycloudflare.com
+• Demo: https://mcp-workbench.uk
 • GitHub: https://github.com/s63jp/mcp-workbench
 
 Cheers,

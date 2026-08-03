@@ -10,7 +10,7 @@ import os
 import json
 from datetime import datetime
 
-TUNNEL_URL = "https://blocked-skill-conviction-console.trycloudflare.com"
+TUNNEL_URL = "https://mcp-workbench.uk"
 LOG_FILE = "/home/kali/mcp-workbench/logs/tunnel-monitor.log"
 
 def log(msg):

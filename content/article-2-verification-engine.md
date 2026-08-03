@@ -89,9 +89,9 @@ The good news: these are all detectable before the server reaches users. The bad
 
 Hermes is integrated into MCP Workbench, so every server you connect gets automatically validated. You can also trigger validation runs via CI/CD webhooks for automated regression testing.
 
-🔗 [Try MCP Workbench live](https://blocked-skill-conviction-console.trycloudflare.com)
+🔗 [Try MCP Workbench live](https://mcp-workbench.uk)
 
-🔗 [Join the beta for CI/CD integration](https://blocked-skill-conviction-console.trycloudflare.com/beta.html)
+🔗 [Join the beta for CI/CD integration](https://mcp-workbench.uk/beta.html)
 
 ---
 

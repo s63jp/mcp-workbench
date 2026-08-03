@@ -1,7 +1,7 @@
 # MCP Workbench — LinkedIn Launch Posts
 
 > **3 posts for 3 audiences. Ready to copy-paste.**
-> **URLs:** Demo: `https://blocked-skill-conviction-console.trycloudflare.com` | Beta: `https://blocked-skill-conviction-console.trycloudflare.com/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
+> **URLs:** Demo: `https://mcp-workbench.uk` | Beta: `https://mcp-workbench.uk/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
 
 ---
 
@@ -40,9 +40,9 @@ The verification engine is what I'm most proud of. It runs real tests and provid
 
 If you build with Claude, Cursor, VS Code, or Cline + MCP, I'd love your feedback.
 
-🔗 Try it: https://blocked-skill-conviction-console.trycloudflare.com
+🔗 Try it: https://mcp-workbench.uk
 ⭐ GitHub: https://github.com/s63jp/mcp-workbench
-📝 Beta: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+📝 Beta: https://mcp-workbench.uk/beta.html
 
 Beta testers get free lifetime Pro access.
 
@@ -97,9 +97,9 @@ For MCP users: know which servers actually work before installing.
 
 Built with Next.js + Python + WebSocket. £0. Fully open source.
 
-🔗 Live demo: https://blocked-skill-conviction-console.trycloudflare.com
+🔗 Live demo: https://mcp-workbench.uk
 ⭐ GitHub: https://github.com/s63jp/mcp-workbench
-📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 If you're building in the MCP ecosystem, let's connect.
 
@@ -184,8 +184,8 @@ Beta testers get:
 🎁 Name in credits
 🎁 Direct access to me
 
-🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-📝 Beta: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+🔗 Demo: https://mcp-workbench.uk
+📝 Beta: https://mcp-workbench.uk/beta.html
 ⭐ GitHub: https://github.com/s63jp/mcp-workbench
 
 ---

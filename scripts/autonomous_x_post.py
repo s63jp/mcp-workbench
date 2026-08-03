@@ -95,7 +95,7 @@ def main():
     print(f"✅ Cookies extracted (auth_token: {cookies.get('auth_token', 'N/A')[:10]}...)")
     
     # Select a tweet
-    url = "https://blocked-skill-conviction-console.trycloudflare.com"
+    url = "https://mcp-workbench.uk"
     tweet_template = random.choice(TWEETS)
     tweet_text = tweet_template["text"].format(url=url)
     

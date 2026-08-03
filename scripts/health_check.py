@@ -8,7 +8,7 @@ import os
 from datetime import datetime, timezone
 
 # Site to check
-SITE_URL = os.environ.get("MCP_WORKBENCH_URL", "https://series-forwarding-converted-juice.trycloudflare.com")
+SITE_URL = os.environ.get("MCP_WORKBENCH_URL", "https://mcp-workbench.uk")
 TIMEOUT_SECONDS = int(os.environ.get("MCP_WORKBENCH_TIMEOUT", "30"))
 REPORT_PATH = os.environ.get("MCP_WORKBENCH_REPORT", "/home/kali/mcp-workbench/docs/daily_report.json")
 

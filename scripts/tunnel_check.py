@@ -7,7 +7,7 @@ import urllib.request
 import urllib.error
 import sys
 
-TUNNEL_URL = "https://blocked-skill-conviction-console.trycloudflare.com"
+TUNNEL_URL = "https://mcp-workbench.uk"
 
 def check_health():
     try:

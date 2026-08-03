@@ -19,7 +19,7 @@ Would you be interested in testing your server on it? I can give you:
 
 It takes 30 seconds to connect.
 
-Beta link: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+Beta link: https://mcp-workbench.uk/beta.html
 
 No pressure — just thought it might save you time debugging.
 
@@ -49,7 +49,7 @@ The goal: Make MCP servers trustworthy and discoverable.
 
 Would love your feedback or a quick chat. Happy to share early access.
 
-Beta: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+Beta: https://mcp-workbench.uk/beta.html
 Repo: https://github.com/s63jp/mcp-workbench
 
 Cheers,
@@ -82,9 +82,9 @@ Key features:
 • Free, open source
 
 Links:
-• Demo: https://blocked-skill-conviction-console.trycloudflare.com
+• Demo: https://mcp-workbench.uk
 • GitHub: https://github.com/s63jp/mcp-workbench
-• Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+• Beta signup: https://mcp-workbench.uk/beta.html
 
 Would love to be featured. Happy to answer questions.
 
@@ -107,7 +107,7 @@ Following up on my email from [date]. No pressure at all — I know you're busy.
 Quick summary:
 Built a testing platform for MCP servers. Your [repo] would be a perfect showcase.
 
-If you're interested: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+If you're interested: https://mcp-workbench.uk/beta.html
 
 If not, no worries. Keep building cool stuff.
 
@@ -136,9 +136,9 @@ Also built a verification engine:
 🔴 Failed — see logs
 
 Links:
-🔗 Live demo: https://blocked-skill-conviction-console.trycloudflare.com
+🔗 Live demo: https://mcp-workbench.uk
 📦 GitHub: https://github.com/s63jp/mcp-workbench
-📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 Looking for beta testers and feedback!
 ```

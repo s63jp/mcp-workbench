@@ -48,7 +48,7 @@ This is where most agent projects break down. You can't ship what you can't veri
 
 The "Postman for MCP" — connect any MCP server, inspect tools, test calls, and debug JSON-RPC traffic in the browser. Essential for anyone building or integrating MCP servers.
 
-🔗 https://blocked-skill-conviction-console.trycloudflare.com
+🔗 https://mcp-workbench.uk
 
 ### Agent Evaluation Platforms
 
@@ -116,9 +116,9 @@ If you're starting an agent project today, here's a pragmatic order of operation
 
 If you're building with MCP servers, you need a testing environment. MCP Workbench is free to use and gives you instant visibility into your server's behavior.
 
-🔗 [Launch MCP Workbench](https://blocked-skill-conviction-console.trycloudflare.com)
+🔗 [Launch MCP Workbench](https://mcp-workbench.uk)
 
-🔗 [Join the beta for advanced features](https://blocked-skill-conviction-console.trycloudflare.com/beta.html)
+🔗 [Join the beta for advanced features](https://mcp-workbench.uk/beta.html)
 
 ---
 

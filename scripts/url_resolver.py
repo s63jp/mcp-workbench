@@ -64,8 +64,8 @@ def replace_url_in_text(text, old_url=None):
     
     # Replace known old URLs
     known_urls = [
-        "beads-elsewhere-fighters-saskatchewan.trycloudflare.com",
-        "mexico-dan-cincinnati-alternatives.trycloudflare.com",
+        "mcp-workbench.uk",
+        "mcp-workbench.uk",
     ]
     
     for old in known_urls:

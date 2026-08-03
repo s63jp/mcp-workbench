@@ -1,7 +1,7 @@
 # IndieHackers Post — Building MCP Workbench with $0 Budget
 
 > **Ready to copy-paste and submit to indiehackers.com**
-> **URLs:** Demo: `https://blocked-skill-conviction-console.trycloudflare.com` | Beta: `https://blocked-skill-conviction-console.trycloudflare.com/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
+> **URLs:** Demo: `https://mcp-workbench.uk` | Beta: `https://mcp-workbench.uk/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
 
 ---
 
@@ -152,8 +152,8 @@ I'm looking for:
 
 Beta testers get free lifetime Pro access.
 
-🔗 Live demo: https://blocked-skill-conviction-console.trycloudflare.com
-📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+🔗 Live demo: https://mcp-workbench.uk
+📝 Beta signup: https://mcp-workbench.uk/beta.html
 ⭐ GitHub: https://github.com/s63jp/mcp-workbench
 
 ---

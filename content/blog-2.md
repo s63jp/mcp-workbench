@@ -64,7 +64,7 @@ This single technique has resolved more "mysterious" client compatibility issues
 
 Next time an MCP server misbehaves, open MCP Workbench, connect it, and read the actual JSON-RPC. You'll be surprised how fast the problem becomes obvious.
 
-🔗 [Launch MCP Workbench](https://depth-plenty-mia-similarly.trycloudflare.com)
+🔗 [Launch MCP Workbench](https://mcp-workbench.uk)
 
 ---
 

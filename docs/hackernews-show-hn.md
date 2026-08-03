@@ -2,9 +2,9 @@
 
 **TL;DR:** I built a web-based testing platform for MCP servers. Think "Postman for MCP" but with a verification engine that actually runs the tools and gives you 🟢 Verified / 🔴 Failed badges.
 
-**Live demo:** https://blocked-skill-conviction-console.trycloudflare.com
+**Live demo:** https://mcp-workbench.uk
 **GitHub:** https://github.com/s63jp/mcp-workbench
-**Beta signup:** https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+**Beta signup:** https://mcp-workbench.uk/beta.html
 
 ---
 

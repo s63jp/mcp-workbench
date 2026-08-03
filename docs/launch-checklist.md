@@ -1,7 +1,7 @@
 # MCP Workbench — Pre-Launch Checklist with Timeline
 
 > **Complete launch plan from T-minus 7 days to launch day.**
-> **URLs:** Demo: `https://blocked-skill-conviction-console.trycloudflare.com` | Beta: `https://blocked-skill-conviction-console.trycloudflare.com/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
+> **URLs:** Demo: `https://mcp-workbench.uk` | Beta: `https://mcp-workbench.uk/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
 
 ---
 
@@ -20,7 +20,7 @@
 
 ### Infrastructure & Product
 
-- [ ] **Confirm demo URL is live** — Visit `https://blocked-skill-conviction-console.trycloudflare.com` and test full flow
+- [ ] **Confirm demo URL is live** — Visit `https://mcp-workbench.uk` and test full flow
 - [ ] **Confirm beta signup page works** — Submit test entry, verify it reaches backend
 - [ ] **Test on multiple browsers** — Chrome, Firefox, Safari
 - [ ] **Test on mobile** — Responsive layout check

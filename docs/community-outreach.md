@@ -12,8 +12,8 @@
 - **Post:**
   > Hey builders! We just launched MCP Workbench — a browser-based workspace to build, test, and manage MCP servers without wrestling JSON configs. If you're building tools with the Model Context Protocol, check out the live demo and grab a beta invite. We'd love feedback from this community.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### Cursor (Anysphere)
 - **URL:** https://discord.gg/cursor
@@ -22,8 +22,8 @@
 - **Post:**
   > Cursor fam — we built MCP Workbench to make spinning up MCP servers as easy as writing a function. No more hand-editing `server_config.json`. Test tools in the browser, manage prompts visually, and ship faster.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### Anthropic / Claude AI
 - **URL:** https://discord.gg/anthropic
@@ -31,8 +31,8 @@
 - **Post:**
   > Anthropic community — MCP Workbench is a visual workspace for building and testing MCP servers that plug straight into Claude. Browser-based, no install required. If you're experimenting with tool use, come try it out.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### Claude AI (community)
 - **URL:** https://discord.gg/claudeai
@@ -40,8 +40,8 @@
 - **Post:**
   > Hey Claude enthusiasts! We made MCP Workbench to simplify building MCP servers for Claude. Design prompts, test tools, and manage resources — all in the browser. Free beta open now.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### LocalLLaMA
 - **URL:** https://discord.gg/localllama
@@ -49,8 +49,8 @@
 - **Post:**
   > LocalLLaMA crew — if you're self-hosting models and want to give them real tool access, MCP Workbench helps you build and debug MCP servers without leaving the browser. Great for testing with local Claude/LLM integrations.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### AI Builders
 - **URL:** https://discord.gg/aibuilders
@@ -58,8 +58,8 @@
 - **Post:**
   > AI Builders — we're shipping MCP Workbench, a no-code/low-code workspace for the Model Context Protocol. Build tools, manage prompts, and test integrations visually. Perfect for rapid prototyping.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### LangChain
 - **URL:** https://discord.gg/langchain
@@ -67,8 +67,8 @@
 - **Post:**
   > LangChain community — MCP Workbench complements your agent stacks by giving you a dedicated visual environment to build and test MCP tool servers. Bring them into LangChain agents or use standalone.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### AutoGPT
 - **URL:** https://discord.gg/autogpt
@@ -76,8 +76,8 @@
 - **Post:**
   > AutoGPT builders — extend your agents with custom MCP tool servers built in MCP Workbench. Browser-based, visual, and built for fast iteration.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### llama.cpp
 - **URL:** https://discord.gg/llamacpp
@@ -85,8 +85,8 @@
 - **Post:**
   > llama.cpp folks — if you're serving local models and want to wire them up with MCP tools, MCP Workbench lets you prototype and test tool servers in the browser before dropping them into your local stack.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### Anysphere (Cursor parent)
 - **URL:** https://discord.gg/anysphere
@@ -94,8 +94,8 @@
 - **Post:**
   > Anysphere community — we built MCP Workbench to make MCP server development visual and fast. If you're extending Cursor with custom tools, this workspace is for you.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ---
 
@@ -114,8 +114,8 @@
   > - Live server testing in-browser
   > - No install required
   >
-  > 🔗 Live demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Live demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
   >
   > Would love feedback from the self-hosting crowd!
 
@@ -127,8 +127,8 @@
   >
   > Hey r/ClaudeAI! We built a browser-based workspace to create and test MCP servers for Claude. Manage prompts, tools, and resources without touching config files.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
   >
   > Happy to answer questions!
 
@@ -142,8 +142,8 @@
   >
   > Looking for beta testers and brutal feedback.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### r/ArtificialInteligence
 - **URL:** https://www.reddit.com/r/ArtificialInteligence/
@@ -153,8 +153,8 @@
   >
   > We're building a browser-based IDE for MCP (Model Context Protocol) servers — the standard Anthropic released for giving AI models tool access. No install, visual editing, instant testing.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
   >
   > Feedback welcome!
 
@@ -166,8 +166,8 @@
   >
   > r/AutoGPT — if you're building agentic systems, MCP Workbench helps you prototype MCP tool servers visually. Plug them into AutoGPT or any MCP-compatible client.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### r/artificial
 - **URL:** https://www.reddit.com/r/artificial/
@@ -177,8 +177,8 @@
   >
   > Built a visual workspace for the Model Context Protocol. Design prompts, create tools, and test servers — all in the browser.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### r/AI_Agents
 - **URL:** https://www.reddit.com/r/AI_Agents/
@@ -188,8 +188,8 @@
   >
   > If your agents need tools, MCP Workbench lets you build and test MCP servers in the browser. Visual, fast, no install.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### r/Cursor
 - **URL:** https://www.reddit.com/r/Cursor/
@@ -199,8 +199,8 @@
   >
   > Cursor community — we built a browser workspace to create and test MCP servers that extend Cursor with custom tools. No config file wrangling.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### r/LangChain
 - **URL:** https://www.reddit.com/r/LangChain/
@@ -210,8 +210,8 @@
   >
   > LangChain devs — prototype MCP tool servers visually, then wire them into your LangChain agents. Browser-based, instant feedback.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ### r/MCP / r/mcp
 - **URL:** https://www.reddit.com/r/MCP/ & https://www.reddit.com/r/mcp/
@@ -221,8 +221,8 @@
   >
   > Fellow MCP enthusiasts — we built a visual workspace to create, edit, and test MCP servers without leaving the browser. If you're working with the Model Context Protocol, we'd love your feedback.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ---
 
@@ -243,8 +243,8 @@
   > - Live in-browser testing
   > - No install required
   >
-  > Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > Demo: https://mcp-workbench.uk
+  > Beta signup: https://mcp-workbench.uk/beta.html
   >
   > Built for developers who want to ship MCP tools faster. Feedback and brutal honesty welcome.
 
@@ -260,8 +260,8 @@
   >
   > Currently in beta and looking for early users and feedback.
   >
-  > 🔗 Demo: https://blocked-skill-conviction-console.trycloudflare.com
-  > 📝 Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+  > 🔗 Demo: https://mcp-workbench.uk
+  > 📝 Beta signup: https://mcp-workbench.uk/beta.html
 
 ---
 

@@ -70,9 +70,9 @@ The beta is free and open now. No credit card required.
 
 **Early beta testers get free lifetime Pro access** when we launch paid tiers.
 
-🔗 [Launch MCP Workbench](https://blocked-skill-conviction-console.trycloudflare.com)
+🔗 [Launch MCP Workbench](https://mcp-workbench.uk)
 
-🔗 [Sign up for beta](https://blocked-skill-conviction-console.trycloudflare.com/beta.html)
+🔗 [Sign up for beta](https://mcp-workbench.uk/beta.html)
 
 ## Built by AI, for AI Developers
 

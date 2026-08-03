@@ -14,7 +14,7 @@ Test MCP servers in your browser. Zero terminal needed.
 
 Built for: Claude, Cursor, VS Code + MCP
 
-Join beta → https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+Join beta → https://mcp-workbench.uk/beta.html
 
 DM for feedback 💬
 
@@ -31,7 +31,7 @@ MCP Workbench fixes that.
 
 Visual tool testing in your browser. No config files.
 
-🔗 Try it free: https://blocked-skill-conviction-console.trycloudflare.com
+🔗 Try it free: https://mcp-workbench.uk
 
 What's your biggest MCP pain point? 👇
 
@@ -69,7 +69,7 @@ What you get:
 🎁 Name in credits
 🎁 Direct access to me
 
-Apply: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
+Apply: https://mcp-workbench.uk/beta.html
 
 RT to spread the word? 🙏
 
@@ -89,7 +89,7 @@ Click it → see:
 
 No more "it works on my machine."
 
-→ https://blocked-skill-conviction-console.trycloudflare.com
+→ https://mcp-workbench.uk
 
 #MCP #Quality #DevTools #AISafety
 ```
@@ -131,7 +131,7 @@ Developers see:
 
 It's like "certified organic" but for AI tools.
 
-Submit yours → https://blocked-skill-conviction-console.trycloudflare.com
+Submit yours → https://mcp-workbench.uk
 
 #MCP #DevTools #AI #Trust
 ```
@@ -150,7 +150,7 @@ MCP Workbench tests them. Verifies them. Provides evidence.
 
 No assumptions. Just runtime proof.
 
-→ https://blocked-skill-conviction-console.trycloudflare.com
+→ https://mcp-workbench.uk
 
 #MCP #Verification #RuntimeEvidence #DevTools
 ```
@@ -185,7 +185,7 @@ MCP Workbench = Postman + Docker Desktop + VS Code... for MCP servers.
 
 All in your browser.
 
-Try it now → https://blocked-skill-conviction-console.trycloudflare.com
+Try it now → https://mcp-workbench.uk
 
 It's free. No signup required.
 

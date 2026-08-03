@@ -7,7 +7,7 @@
 > **Date:** August 2026 
 > **Status:** Launched (MVP live)
 > **Budget:** £0 (bootstrapped)
-> **Public URL:** https://blocked-skill-conviction-console.trycloudflare.com
+> **Public URL:** https://mcp-workbench.uk
 > ⚠️ Note: Cloudflare quick tunnel URLs are temporary and will change on restart.
 
 ---

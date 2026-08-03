@@ -1,7 +1,7 @@
 # MCP Workbench — Product Hunt Launch Kit
 
 > **Ready to copy-paste. Just fill in [bracketed] fields where noted.**
-> **URLs:** Demo: `https://blocked-skill-conviction-console.trycloudflare.com` | Beta: `https://blocked-skill-conviction-console.trycloudflare.com/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
+> **URLs:** Demo: `https://mcp-workbench.uk` | Beta: `https://mcp-workbench.uk/beta.html` | GitHub: `https://github.com/s63jp/mcp-workbench`
 
 ---
 
@@ -92,9 +92,9 @@ Select these on Product Hunt:
 
 | Field | Value |
 |-------|-------|
-| Website | `https://blocked-skill-conviction-console.trycloudflare.com` |
+| Website | `https://mcp-workbench.uk` |
 | GitHub | `https://github.com/s63jp/mcp-workbench` |
-| Beta Signup | `https://blocked-skill-conviction-console.trycloudflare.com/beta.html` |
+| Beta Signup | `https://mcp-workbench.uk/beta.html` |
 | Twitter/X | `https://x.com/Gizmo50009` |
 
 ---

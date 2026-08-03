@@ -54,9 +54,9 @@ We're building verification into the core of MCP Workbench — a testing environ
 
 The goal is simple: **every MCP server should be verifiable, and every agent builder should know what they're installing**.
 
-🔗 [Try MCP Workbench live](https://blocked-skill-conviction-console.trycloudflare.com)
+🔗 [Try MCP Workbench live](https://mcp-workbench.uk)
 
-🔗 [Join the beta](https://blocked-skill-conviction-console.trycloudflare.com/beta.html)
+🔗 [Join the beta](https://mcp-workbench.uk/beta.html)
 
 ---
 
