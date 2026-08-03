@@ -63,6 +63,15 @@ See: docs/cold-email-templates.md
 - Email scraping is limited by GitHub privacy settings
 - Best approach: Combine GitHub issues + email + community posts
 
+## 📧 Sent Emails
+
+| Date | Name | Email | Subject | Status |
+|------|------|-------|---------|--------|
+| 2026-08-03 | Tadas Antanavicius | tadas@pulsemcp.com | Testing your MCP server visually — want early access? | ✅ Sent (thread: 13612ea8-d7b2-4c1d-a108-b51912cdb530) |
+| 2026-08-03 | Cliff Hall | cliff@futurescale.com | Testing your MCP server visually — want early access? | ✅ Sent (thread: 2052e75a-1948-4aae-83ca-a174a30238f1) |
+| 2026-08-03 | Justin Spahr-Summers | justin@fernforestgames.com | Testing your MCP server visually — want early access? | ✅ Sent (thread: 75b4351c-0776-4613-9bf8-71fbf3e2c11f) |
+| 2026-08-03 | Marcelo Ochoa | marcelo.ochoa@gmail.com | Testing your MCP server visually — want early access? | ✅ Sent (thread: d227a122-2084-4fbe-b930-49a67e5e34fc) |
+
 ---
 
 *Last updated: 2026-08-03*
