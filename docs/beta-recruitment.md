@@ -29,7 +29,7 @@ MCP is Anthropic's open protocol that lets AI assistants (Claude, Cursor, VS Cod
 ## How to Join
 
 **Option 1: Web Interface** (easiest)
-Visit: https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+Visit: https://blocked-skill-conviction-console.trycloudflare.com
 
 Test connecting to any MCP server. If it works, reply to this post. If it breaks, tell us what happened.
 

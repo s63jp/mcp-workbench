@@ -22,9 +22,9 @@ MCP (Model Context Protocol) is Anthropic's open protocol that lets AI assistant
 
 ## 🚀 Live Demo
 
-**Try it now:** https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+**Try it now:** https://blocked-skill-conviction-console.trycloudflare.com
 
-**Beta signup:** https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com/beta.html
+**Beta signup:** https://blocked-skill-conviction-console.trycloudflare.com/beta.html
 
 ## 📸 Screenshot
 
@@ -71,8 +71,8 @@ cloudflared tunnel --url http://localhost:3460
 
 We're looking for beta testers! If you build with Claude, Cursor, or VS Code + MCP:
 
-1. Try the [live demo](https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com)
-2. [Sign up for beta access](https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com/beta.html)
+1. Try the [live demo](https://blocked-skill-conviction-console.trycloudflare.com)
+2. [Sign up for beta access](https://blocked-skill-conviction-console.trycloudflare.com/beta.html)
 3. Open an issue with feedback
 
 **Early adopters get free lifetime Pro access!**

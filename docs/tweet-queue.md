@@ -14,7 +14,7 @@ Test MCP servers in your browser. Zero terminal needed.
 
 Built for: Claude, Cursor, VS Code + MCP
 
-Join beta → https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com/beta.html
+Join beta → https://blocked-skill-conviction-console.trycloudflare.com/beta.html
 
 DM for feedback 💬
 
@@ -31,7 +31,7 @@ MCP Workbench fixes that.
 
 Visual tool testing in your browser. No config files.
 
-🔗 Try it free: https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+🔗 Try it free: https://blocked-skill-conviction-console.trycloudflare.com
 
 What's your biggest MCP pain point? 👇
 
@@ -69,7 +69,7 @@ What you get:
 🎁 Name in credits
 🎁 Direct access to me
 
-Apply: https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com/beta.html
+Apply: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
 
 RT to spread the word? 🙏
 
@@ -89,7 +89,7 @@ Click it → see:
 
 No more "it works on my machine."
 
-→ https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+→ https://blocked-skill-conviction-console.trycloudflare.com
 
 #MCP #Quality #DevTools #AISafety
 ```
@@ -131,7 +131,7 @@ Developers see:
 
 It's like "certified organic" but for AI tools.
 
-Submit yours → https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+Submit yours → https://blocked-skill-conviction-console.trycloudflare.com
 
 #MCP #DevTools #AI #Trust
 ```
@@ -150,7 +150,7 @@ MCP Workbench tests them. Verifies them. Provides evidence.
 
 No assumptions. Just runtime proof.
 
-→ https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+→ https://blocked-skill-conviction-console.trycloudflare.com
 
 #MCP #Verification #RuntimeEvidence #DevTools
 ```
@@ -185,7 +185,7 @@ MCP Workbench = Postman + Docker Desktop + VS Code... for MCP servers.
 
 All in your browser.
 
-Try it now → https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+Try it now → https://blocked-skill-conviction-console.trycloudflare.com
 
 It's free. No signup required.
 

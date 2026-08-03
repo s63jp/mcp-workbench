@@ -47,13 +47,13 @@ So I built **MCP Workbench** — a web-based testing platform for MCP servers.
 
 No more "it works on my machine." Just runtime evidence.
 
-**Try it:** https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com
+**Try it:** https://blocked-skill-conviction-console.trycloudflare.com
 
 **GitHub:** https://github.com/s63jp/mcp-workbench (open source)
 
 **Looking for beta testers!** If you build or use MCP servers daily, I'd love your feedback.
 
-Beta signup: https://beads-elsewhere-fighters-saskatchewan.trycloudflare.com/beta.html
+Beta signup: https://blocked-skill-conviction-console.trycloudflare.com/beta.html
 
 🎁 Beta testers get free lifetime Pro access + name in credits.
 
