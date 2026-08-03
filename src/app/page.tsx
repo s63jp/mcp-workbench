@@ -294,7 +294,7 @@ export default function HomePage() {
             <a href="#layers" className="hover:text-foreground transition-colors">Layers</a>
             <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
             <a href="#" className="hover:text-foreground transition-colors">Docs</a>
-            <a href="#" className="hover:text-foreground transition-colors">GitHub</a>
+            <a href="https://github.com/s63jp/mcp-workbench" className="hover:text-foreground transition-colors">GitHub</a>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
             <button className="hidden sm:block text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors">Sign In</button>
@@ -763,10 +763,11 @@ export default function HomePage() {
       {/* ─── Footer ───────────────────────────────────────── */}
       <footer className="border-t border-border py-8 px-4 text-center text-sm text-muted">
         <p>© 2024 MCP Workbench. Built for the MCP community.</p>
+        <p className="mt-2">Contact: <a href="mailto:mcp-workbench@agentmail.to" className="text-primary hover:underline">mcp-workbench@agentmail.to</a></p>
         <div className="flex items-center justify-center gap-4 mt-3">
           <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
           <a href="#" className="hover:text-foreground transition-colors">Terms</a>
-          <a href="#" className="hover:text-foreground transition-colors flex items-center gap-1"><ExternalLink size={12} /> GitHub</a>
+          <a href="https://github.com/s63jp/mcp-workbench" className="hover:text-foreground transition-colors flex items-center gap-1"><ExternalLink size={12} /> GitHub</a>
         </div>
       </footer>
     </div>
