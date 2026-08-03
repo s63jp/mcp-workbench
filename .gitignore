@@ -11,3 +11,9 @@ sessions/
 .pytest_cache/
 logs/
 .github_env
+
+# Backend - private
+server.py
+proxy.py
+*.py
+!scripts/*.py
