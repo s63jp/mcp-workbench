@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
-Cloudflare Tunnel Auto-Restarter for MCP Workbench.
-Monitors the tunnel health and restarts with new URL if needed.
+Tunnel Monitor + Auto-Restarter for MCP Workbench.
+Runs every 30 minutes via cron to ensure tunnel stays alive.
 """
 import subprocess
 import time
 import re
 import os
+import glob
 import json
 from datetime import datetime
 
@@ -16,33 +17,16 @@ LOG_FILE = f"{PROJECT_DIR}/logs/tunnel-monitor.log"
 
 def log(msg):
     os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
+    ts = datetime.now().isoformat()
     with open(LOG_FILE, 'a') as f:
-        f.write(f"{datetime.now().isoformat()} | {msg}\n")
+        f.write(f"{ts} | {msg}\n")
     print(msg)
-
-def get_current_tunnel_url():
-    """Try to find existing tunnel process and extract URL."""
-    try:
-        result = subprocess.run(
-            ["pgrep", "-a", "cloudflared"],
-            capture_output=True, text=True
-        )
-        # URL is assigned on startup - we need to check the log file
-        if os.path.exists("/tmp/tunnel.log"):
-            with open("/tmp/tunnel.log") as f:
-                content = f.read()
-                match = re.search(r'https://[a-zA-Z0-9-]+\.trycloudflare\.com', content)
-                if match:
-                    return match.group(0)
-    except Exception as e:
-        log(f"Error finding tunnel: {e}")
-    return None
 
 def test_url(url):
     """Test if tunnel URL is responding."""
     try:
         import urllib.request
-        urllib.request.urlopen(f"{url}/api/health", timeout=5)
+        urllib.request.urlopen(f"{url}/api/health", timeout=8)
         return True
     except:
         return False
@@ -60,11 +44,11 @@ def restart_tunnel():
         os.remove("/tmp/tunnel.log")
     
     # Start new tunnel
-    proc = subprocess.Popen(
-        ["cloudflared", "tunnel", "--url", "http://localhost:3460"],
-        stdout=open("/tmp/tunnel.log", "w"),
-        stderr=subprocess.STDOUT
-    )
+    with open("/tmp/tunnel.log", "w") as logf:
+        proc = subprocess.Popen(
+            ["cloudflared", "tunnel", "--url", "http://localhost:3460"],
+            stdout=logf, stderr=subprocess.STDOUT
+        )
     
     # Wait for URL
     url = None
@@ -79,12 +63,9 @@ def restart_tunnel():
                     break
     
     if url:
-        # Save URL
         with open(URL_FILE, 'w') as f:
             f.write(url)
         log(f"New tunnel URL: {url}")
-        
-        # Update all files with new URL
         update_all_urls(url)
         return url
     else:
@@ -92,10 +73,7 @@ def restart_tunnel():
         return None
 
 def update_all_urls(new_url):
-    """Update all documentation with the new tunnel URL."""
-    import glob
-    
-    # Read current URL
+    """Update all documentation with new tunnel URL."""
     old_url = None
     if os.path.exists(URL_FILE):
         with open(URL_FILE) as f:
@@ -116,7 +94,6 @@ def update_all_urls(new_url):
         try:
             with open(filepath, 'r') as f:
                 content = f.read()
-            
             if old_domain in content:
                 new_content = content.replace(old_domain, new_domain)
                 with open(filepath, 'w') as f:
@@ -127,41 +104,37 @@ def update_all_urls(new_url):
     
     log(f"Updated {updated} files with new URL")
     
-    # Git commit
     try:
+        subprocess.run(["git", "add", "-A"], cwd=PROJECT_DIR, capture_output=True)
         subprocess.run(
-            ["git", "add", "-A"],
+            ["git", "commit", "-m", f"auto: tunnel URL update to {new_domain}"],
             cwd=PROJECT_DIR, capture_output=True
         )
-        subprocess.run(
-            ["git", "commit", "-m", f"auto: update tunnel URL to {new_domain}"],
-            cwd=PROJECT_DIR, capture_output=True
-        )
-        log("Git commit pushed")
+        log("Git commit complete")
     except:
         pass
 
 def main():
-    log("=== Tunnel Monitor Starting ===")
+    log("=== Tunnel Health Check ===")
     
-    # Check current URL
     current_url = None
     if os.path.exists(URL_FILE):
         with open(URL_FILE) as f:
             current_url = f.read().strip()
     
     if current_url and test_url(current_url):
-        log(f"Tunnel healthy: {current_url}")
-        return
+        log(f"Healthy: {current_url}")
+        return 0
     
-    # URL expired or not responding
-    log(f"Tunnel unhealthy or expired. Current: {current_url}")
+    log(f"Unhealthy/expired: {current_url}")
     new_url = restart_tunnel()
     
     if new_url:
-        log(f"Tunnel restored: {new_url}")
+        log(f"Restored: {new_url}")
+        return 0
     else:
         log("FAILED to restore tunnel")
+        return 1
 
 if __name__ == "__main__":
-    main()
+    exit(main())
