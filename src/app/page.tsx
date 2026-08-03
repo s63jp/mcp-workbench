@@ -4,7 +4,9 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import {
   Play, Square, Terminal, CheckCircle, XCircle, Zap,
   Shield, Server, GitBranch, ChevronDown, ChevronUp,
-  ExternalLink, Lock, Users, Layers, Activity
+  ExternalLink, Lock, Users, Layers, Activity,
+  Brain, GitMerge, BarChart3, Search, FileCheck,
+  Database, Bot, LineChart, Crown, ArrowRight
 } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────
@@ -12,7 +14,7 @@ type ToolParam = { name: string; type: string; required: boolean; description: s
 type Tool = { name: string; description: string; params: ToolParam[] };
 type ServerConfig = { command: string; args: string; status: "idle" | "connecting" | "connected" | "error"; message: string; tools: Tool[] };
 type LogEntry = { time: string; level: "info" | "success" | "error" | "warn"; message: string };
-type PricingTier = { name: string; price: string; period: string; features: string[]; cta: string; highlight?: boolean };
+type PricingTier = { name: string; price: string; period: string; tagline: string; features: string[]; cta: string; highlight?: boolean };
 
 // ─── Demo Server Presets ─────────────────────────────────────────
 const PRESETS = [
@@ -187,14 +189,30 @@ export default function HomePage() {
       name: "Free",
       price: "£0",
       period: "/forever",
-      features: ["Test public MCP servers", "Basic validation reports", "Console output viewer", "Community support"],
+      tagline: "For individual developers",
+      features: [
+        "Test public MCP servers",
+        "Basic startup validation",
+        "Console output viewer",
+        "3 saved configurations",
+        "Community support",
+      ],
       cta: "Get Started",
     },
     {
       name: "Pro",
       price: "£9",
       period: "/month",
-      features: ["Everything in Free", "Private server testing", "Saved configurations", "Compatibility reports", "Export to JSON/YAML", "Email support"],
+      tagline: "For power users",
+      features: [
+        "Everything in Free",
+        "Private server testing",
+        "Full HVE verification suite",
+        "Performance history & graphs",
+        "Saved configurations (unlimited)",
+        "Export reports (PDF/JSON)",
+        "Email support",
+      ],
       cta: "Start Pro Trial",
       highlight: true,
     },
@@ -202,9 +220,64 @@ export default function HomePage() {
       name: "Team",
       price: "£29",
       period: "/month",
-      features: ["Everything in Pro", "Shared team configs", "Slack notifications", "CI/CD webhook", "Audit logs", "Priority support"],
+      tagline: "Per seat — growing teams",
+      features: [
+        "Everything in Pro",
+        "Shared team workspaces",
+        "CI/CD webhook integration",
+        "Custom verification pipelines",
+        "Audit logs",
+        "Slack notifications",
+        "Priority support",
+      ],
       cta: "Contact Sales",
     },
+    {
+      name: "Enterprise",
+      price: "Custom",
+      period: "",
+      tagline: "For large organizations",
+      features: [
+        "Everything in Team",
+        "On-premise deployment",
+        "Custom security policies",
+        "SSO (SAML, OIDC)",
+        "Dedicated account manager",
+        "SLA guarantee",
+        "Custom integrations",
+      ],
+      cta: "Talk to Sales",
+    },
+  ];
+
+  // Feature comparison data
+  const featureComparison = [
+    { feature: "Public MCP server testing", free: true, pro: true, team: true, enterprise: true },
+    { feature: "Private server testing", free: false, pro: true, team: true, enterprise: true },
+    { feature: "Basic startup validation", free: true, pro: true, team: true, enterprise: true },
+    { feature: "Full HVE verification suite", free: false, pro: true, team: true, enterprise: true },
+    { feature: "Performance metrics & graphs", free: false, pro: true, team: true, enterprise: true },
+    { feature: "Saved configurations", free: "3", pro: "Unlimited", team: "Unlimited", enterprise: "Unlimited" },
+    { feature: "Export reports (PDF/JSON)", free: false, pro: true, team: true, enterprise: true },
+    { feature: "Shared team workspaces", free: false, pro: false, team: true, enterprise: true },
+    { feature: "CI/CD webhook integration", free: false, pro: false, team: true, enterprise: true },
+    { feature: "Custom verification pipelines", free: false, pro: false, team: true, enterprise: true },
+    { feature: "Audit logs", free: false, pro: false, team: true, enterprise: true },
+    { feature: "On-premise deployment", free: false, pro: false, team: false, enterprise: true },
+    { feature: "SSO / SAML / OIDC", free: false, pro: false, team: false, enterprise: true },
+    { feature: "Dedicated support & SLA", free: false, pro: false, team: false, enterprise: true },
+  ];
+
+  // Vision doc layer features
+  const layerFeatures = [
+    { layer: "Layer 1", icon: <Search size={18} />, title: "Discovery & Catalog", desc: "Public MCP server directory with ratings, search by capability, community reviews.", color: "text-blue-400" },
+    { layer: "Layer 2", icon: <Terminal size={18} />, title: "Testing & Validation", desc: "Visual tool discovery, live tool call testing, raw JSON-RPC console.", color: "text-green-400" },
+    { layer: "Layer 3", icon: <FileCheck size={18} />, title: "Verification & Trust", desc: "Verification badges with startup logs, benchmark speed, memory profiles.", color: "text-emerald-400" },
+    { layer: "Layer 4", icon: <BarChart3 size={18} />, title: "Performance Metrics", desc: "Execution latency, memory footprint, connection stability, error tracking.", color: "text-yellow-400" },
+    { layer: "Layer 5", icon: <Shield size={18} />, title: "Security Scanning", desc: "Static analysis, permission audit, network monitoring, sandbox execution.", color: "text-red-400" },
+    { layer: "Layer 6", icon: <GitMerge size={18} />, title: "Version History", desc: "Git-like versioning, changelog generation, breaking change detection.", color: "text-purple-400" },
+    { layer: "Layer 7", icon: <Brain size={18} />, title: "AI Documentation", desc: "Auto-generated tool descriptions, usage examples, best practices suggestions.", color: "text-pink-400" },
+    { layer: "Layer 8", icon: <Bot size={18} />, title: "Multi-Agent Orchestration", desc: "Compose multiple MCP servers, workflow designer, parallel execution planning.", color: "text-cyan-400" },
   ];
 
   return (
@@ -218,26 +291,27 @@ export default function HomePage() {
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm text-muted">
             <a href="#features" className="hover:text-foreground transition-colors">Features</a>
+            <a href="#layers" className="hover:text-foreground transition-colors">Layers</a>
             <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
             <a href="#" className="hover:text-foreground transition-colors">Docs</a>
             <a href="#" className="hover:text-foreground transition-colors">GitHub</a>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="text-sm px-4 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors">Sign In</button>
-            <button className="text-sm px-4 py-1.5 rounded-lg bg-primary text-white hover:bg-primary-hover transition-colors">Get Started</button>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button className="hidden sm:block text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors">Sign In</button>
+            <button className="text-sm px-3 sm:px-4 py-1.5 rounded-lg bg-primary text-white hover:bg-primary-hover transition-colors">Get Started</button>
           </div>
         </div>
       </nav>
 
       {/* ─── Hero ───────────────────────────────────────── */}
-      <section className="pt-20 pb-12 px-4 text-center">
+      <section className="pt-12 sm:pt-20 pb-8 sm:pb-12 px-4 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-6 border border-primary/20">
           <Zap size={12} /> Now in public beta — free forever tier
         </div>
-        <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-5">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-5 leading-tight">
           The <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Postman</span> for MCP Servers
         </h1>
-        <p className="text-lg text-muted max-w-2xl mx-auto mb-8 leading-relaxed">
+        <p className="text-base sm:text-lg text-muted max-w-2xl mx-auto mb-8 leading-relaxed px-2">
           Connect, test, validate, and debug Model Context Protocol servers in seconds.
           No config files. No terminal gymnastics. Just point, click, and discover.
         </p>
@@ -314,7 +388,7 @@ export default function HomePage() {
           </p>
         </div>
         
-        <div className="flex items-center justify-center gap-3">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <button className="px-6 py-2.5 rounded-xl bg-primary text-white font-medium hover:bg-primary-hover transition-colors flex items-center gap-2">
             <Play size={18} fill="currentColor" /> Launch Workbench
           </button>
@@ -384,9 +458,9 @@ export default function HomePage() {
           </div>
 
           {/* Tabs + Content */}
-          <div className="flex">
+          <div className="flex flex-col sm:flex-row">
             {/* Sidebar Tabs */}
-            <div className="w-44 border-r border-border flex flex-col">
+            <div className="w-full sm:w-44 border-r border-border flex flex-row sm:flex-col overflow-x-auto">
               {tabs.map((t, i) => (
                 <button key={i} onClick={() => setActiveTab(i)} className={`flex items-center gap-2 px-4 py-2.5 text-sm transition-colors text-left ${activeTab === i ? "bg-primary/10 text-primary border-l-2 border-primary" : "text-muted hover:text-foreground hover:bg-surface-hover border-l-2 border-transparent"}`}>
                   {t.icon} {t.label}
@@ -528,23 +602,96 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── Layer Features (Feature Discovery) ───────────── */}
+      <section id="layers" className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-4 border border-primary/20">
+              <Brain size={12} /> 10-Layer Architecture
+            </div>
+            <h2 className="text-3xl font-bold mb-3">The complete MCP development platform</h2>
+            <p className="text-muted max-w-xl mx-auto">From discovery to deployment — every tool you need to build, test, verify, and ship MCP servers.</p>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {layerFeatures.map((f, i) => (
+              <div key={i} className="p-4 rounded-xl border border-border bg-surface hover:border-primary/30 transition-all group hover:shadow-lg hover:shadow-primary/5">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className={`${f.color} group-hover:scale-110 transition-transform`}>{f.icon}</span>
+                  <span className="text-xs font-mono text-muted">{f.layer}</span>
+                </div>
+                <h3 className="font-semibold mb-1 text-sm">{f.title}</h3>
+                <p className="text-xs text-muted leading-relaxed">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+          {/* Layer 9 & 10 - Featured prominently */}
+          <div className="grid md:grid-cols-2 gap-4 mt-4">
+            <div className="p-6 rounded-xl border border-primary/30 bg-gradient-to-br from-primary/5 to-transparent relative overflow-hidden group hover:shadow-xl hover:shadow-primary/10 transition-all">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full opacity-50 group-hover:opacity-80 transition-opacity" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 rounded-lg bg-primary/20">
+                    <Bot size={22} className="text-primary" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-mono text-primary">Layer 9</span>
+                    <h3 className="font-bold text-lg">Multi-Agent Orchestration</h3>
+                  </div>
+                </div>
+                <p className="text-sm text-muted mb-4">Compose multiple MCP servers into intelligent workflows. Design agent pipelines, plan parallel execution, aggregate results, and resolve conflicts — all with visual tooling.</p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">Workflow Designer</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">Parallel Execution</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">Result Aggregation</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">Conflict Resolution</span>
+                </div>
+              </div>
+            </div>
+            <div className="p-6 rounded-xl border border-accent/30 bg-gradient-to-br from-accent/5 to-transparent relative overflow-hidden group hover:shadow-xl hover:shadow-accent/10 transition-all">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/10 to-transparent rounded-bl-full opacity-50 group-hover:opacity-80 transition-opacity" />
+              <div className="relative">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 rounded-lg bg-accent/20">
+                    <LineChart size={22} className="text-accent" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-mono text-accent">Layer 10</span>
+                    <h3 className="font-bold text-lg">Live Execution Graphs</h3>
+                  </div>
+                </div>
+                <p className="text-sm text-muted mb-4">Watch your MCP servers in action with real-time visualization. See execution flows, decision trees, performance heatmaps, and bottleneck identification as they happen.</p>
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">Real-time Visualization</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">Decision Trees</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">Heatmaps</span>
+                  <span className="text-[10px] px-2 py-1 rounded-full bg-accent/10 text-accent border border-accent/20">Bottleneck Detection</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ─── Pricing ──────────────────────────────────────── */}
       <section id="pricing" className="py-16 px-4 bg-surface/50 border-y border-border">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-3">Simple, transparent pricing</h2>
             <p className="text-muted">Start free. Upgrade when you need more.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
             {pricing.map((tier) => (
-              <div key={tier.name} className={`rounded-xl border p-6 ${tier.highlight ? "border-primary bg-primary/5 relative overflow-hidden" : "border-border bg-surface"}`}>
+              <div key={tier.name} className={`rounded-xl border p-5 flex flex-col ${tier.highlight ? "border-primary bg-primary/5 relative overflow-hidden shadow-lg shadow-primary/10" : "border-border bg-surface"}`}>
                 {tier.highlight && <div className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg">MOST POPULAR</div>}
-                <h3 className="font-semibold text-lg mb-1">{tier.name}</h3>
+                <div className="mb-3">
+                  <h3 className="font-semibold text-lg mb-0.5">{tier.name}</h3>
+                  <p className="text-xs text-muted">{tier.tagline}</p>
+                </div>
                 <div className="flex items-baseline gap-1 mb-4">
                   <span className="text-3xl font-bold">{tier.price}</span>
-                  <span className="text-sm text-muted">{tier.period}</span>
+                  {tier.period && <span className="text-sm text-muted">{tier.period}</span>}
                 </div>
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2 mb-6 flex-1">
                   {tier.features.map((feat, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm">
                       <CheckCircle size={14} className="text-success shrink-0 mt-0.5" />
@@ -557,6 +704,49 @@ export default function HomePage() {
                 </button>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Feature Comparison Table ──────────────────────── */}
+      <section className="py-16 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-bold mb-2">Compare plans</h2>
+            <p className="text-muted text-sm">See what's included in each tier</p>
+          </div>
+          <div className="rounded-xl border border-border overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-surface">
+                    <th className="text-left px-4 py-3 font-semibold text-muted">Feature</th>
+                    <th className="text-center px-3 py-3 font-semibold w-24">Free</th>
+                    <th className="text-center px-3 py-3 font-semibold w-24">Pro</th>
+                    <th className="text-center px-3 py-3 font-semibold w-24">Team</th>
+                    <th className="text-center px-3 py-3 font-semibold w-24">Enterprise</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {featureComparison.map((row, i) => (
+                    <tr key={i} className={`border-b border-border/50 ${i % 2 === 0 ? "bg-transparent" : "bg-surface/30"}`}>
+                      <td className="px-4 py-3 text-muted">{row.feature}</td>
+                      {[row.free, row.pro, row.team, row.enterprise].map((val, j) => (
+                        <td key={j} className="text-center px-3 py-3">
+                          {val === true ? (
+                            <CheckCircle size={16} className="text-success mx-auto" />
+                          ) : val === false ? (
+                            <XCircle size={16} className="text-muted/40 mx-auto" />
+                          ) : (
+                            <span className="text-xs font-medium text-primary">{val}</span>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
