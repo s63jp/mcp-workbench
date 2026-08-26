@@ -1,0 +1,38 @@
+[
+  {
+    "number": 1,
+    "success": false,
+    "error": "",
+    "text": "\ud83e\udd16 Building with MCP servers?\n\nStop debugging cryptic stdio errors. MCP Workbench gives you a visual testing environment.\n\n\u2022 Tool schema inspection\n\u2022 Live parameter testing\n\u2022 JSON-RPC console\n\nTry it: https://mcp-workbench.uk\n\n#ClaudeAI #CursorAI #VSCode #AIAgents"
+  },
+  {
+    "number": 2,
+    "success": false,
+    "error": "",
+    "text": "\ud83d\udca1 MCP tip of the day:\n\nUse MCP Workbench to validate your server before deploying to Claude Desktop or Cursor.\n\nCatch errors early. Save hours of debugging.\n\n\ud83d\udd17 https://mcp-workbench.uk/beta.html\n\nWhat's your biggest MCP pain point? \ud83d\udc47\n\n#MCP #AITools #DeveloperTools #BuildInPublic"
+  },
+  {
+    "number": 3,
+    "success": false,
+    "error": "",
+    "text": "\ud83d\ude80 The MCP ecosystem is exploding.\n\n1000+ community servers and counting. But testing them is still painful.\n\nMCP Workbench fixes that.\n\nVisual testing. Zero config. Browser-based.\n\nTry the beta \u2192 https://mcp-workbench.uk\n\n#AI #LLM #MCP #Claude"
+  },
+  {
+    "number": 4,
+    "success": false,
+    "error": "",
+    "text": "Built a cool MCP server? Don't ship it blind. Test it first with MCP Workbench - visual testing, zero config. \u2192 https://mcp-workbench.uk/beta.html #MCP #BuildInPublic"
+  },
+  {
+    "number": 5,
+    "success": false,
+    "error": "",
+    "text": "The MCP ecosystem is exploding. 1000+ community servers and counting. But testing them is still painful. MCP Workbench fixes that \u2192 https://mcp-workbench.uk #AI #LLM"
+  },
+  {
+    "number": 6,
+    "success": false,
+    "error": "",
+    "text": "\ud83d\ude80 MCP Workbench beta is LIVE! Test any MCP server in your browser. No terminal needed. Join the beta \u2192 https://mcp-workbench.uk #MCP #AIagents #BuildInPublic"
+  }
+]

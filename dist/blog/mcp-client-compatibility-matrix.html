@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCP Server Compatibility: Claude Desktop vs Cursor vs VS Code (2026 Matrix) | MCP Workbench</title>
+<meta name="description" content="Which MCP clients support which features? A practical compatibility matrix for Claude Desktop, Cursor, VS Code Copilot, and Cline — plus how to test your server against all of them.">
+<meta name="keywords" content="MCP compatibility, Claude Desktop MCP, Cursor MCP, VS Code MCP, MCP client support">
+<link rel="canonical" href="https://mcp-workbench.uk/blog/mcp-client-compatibility-matrix.html">
+<meta property="og:title" content="MCP Server Compatibility: Claude Desktop vs Cursor vs VS Code (2026)">
+<meta property="og:description" content="A practical compatibility matrix for the major MCP clients and how to test your server against all of them.">
+<meta property="og:url" content="https://mcp-workbench.uk/blog/mcp-client-compatibility-matrix.html">
+<meta property="og:type" content="article">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  nav { border-bottom: 1px solid #1f1f2e; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; }
+  nav a { color: #667eea; text-decoration: none; font-weight: 600; }
+  h1 { font-size: 2.2rem; line-height: 1.25; margin: 30px 0 12px; color: #fff; }
+  h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #fff; }
+  p, li { margin-bottom: 14px; color: #b8b8c8; }
+  code { background: #16161f; border: 1px solid #2a2a40; border-radius: 4px; padding: 2px 6px; font-size: 0.9em; color: #9db4ff; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 0.95em; }
+  th, td { border: 1px solid #2a2a40; padding: 10px 12px; text-align: left; }
+  th { background: #16161f; color: #fff; }
+  td { color: #b8b8c8; }
+  .yes { color: #4ade80; font-weight: 600; }
+  .no { color: #f87171; }
+  .partial { color: #fbbf24; }
+  .cta { background: linear-gradient(135deg, #1a1a2e 0%, #141420 100%); border: 1px solid #2a2a40; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .cta a { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 12px; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 24px; }
+  ul, ol { padding-left: 24px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">⚡ MCP Workbench</a>
+  <a href="/register">Try it free →</a>
+</nav>
+<div class="wrap">
+  <h1>MCP Server Compatibility: Claude Desktop vs Cursor vs VS Code (2026 Matrix)</h1>
+  <p class="meta">Published August 2026 · 6 min read</p>
+
+  <p>You've built an MCP server. It works in your terminal. Then a user reports it doesn't work in Cursor. Or Claude Desktop. Or VS Code. Welcome to MCP client fragmentation — the protocol is standard, but every client implements a slightly different subset of it.</p>
+
+  <h2>The compatibility matrix</h2>
+  <table>
+    <tr><th>Feature</th><th>Claude Desktop</th><th>Cursor</th><th>VS Code Copilot</th><th>Cline</th></tr>
+    <tr><td>stdio transport</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+    <tr><td>SSE/HTTP transport</td><td class="yes">✓</td><td class="partial">partial</td><td class="partial">partial</td><td class="yes">✓</td></tr>
+    <tr><td>tools/list + tools/call</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+    <tr><td>resources</td><td class="yes">✓</td><td class="no">✗</td><td class="partial">partial</td><td class="yes">✓</td></tr>
+    <tr><td>prompts</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="partial">partial</td></tr>
+    <tr><td>sampling (server→client LLM calls)</td><td class="yes">✓</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td></tr>
+    <tr><td>structured output schemas</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+    <tr><td>OAuth auth flow</td><td class="yes">✓</td><td class="partial">partial</td><td class="partial">partial</td><td class="no">✗</td></tr>
+  </table>
+  <p><em>Status as of August 2026 — clients move fast, verify against your target versions.</em></p>
+
+  <h2>What this means for server authors</h2>
+  <ul>
+    <li><strong>Tools are the safe core.</strong> Every client supports <code>tools/list</code> and <code>tools/call</code>. If your server's value is in tools, it works everywhere.</li>
+    <li><strong>Resources and prompts are optional.</strong> Don't make them the primary interface — Cursor and VS Code users won't see them.</li>
+    <li><strong>Sampling is Claude-only.</strong> If your server depends on sampling, it's a Claude Desktop exclusive.</li>
+    <li><strong>Test against every client you claim to support.</strong> "Works with Claude" doesn't mean "works with Cursor."</li>
+  </ul>
+
+  <h2>How to test against all clients without installing them all</h2>
+  <p>You don't need four machines. The core of every client is the same JSON-RPC handshake — initialize, list tools, call a tool. If your server passes that sequence cleanly, it will work in every client that supports the features you use.</p>
+  <p><a href="/">MCP Workbench</a> runs exactly this sequence against your server and shows the full traffic: the initialize response, the tool list, and live tool call results. It's the fastest way to verify your server speaks correct MCP before you ship it to users on any client.</p>
+
+  <div class="cta">
+    <h3>Verify your server speaks correct MCP</h3>
+    <p>Run the full handshake in your browser and see every message.</p>
+    <a href="/register">Test your server — free</a>
+  </div>
+</div>
+</body>
+</html>

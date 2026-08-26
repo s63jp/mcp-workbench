@@ -16,8 +16,11 @@ fi
 pkill -f 'server.py 3460' 2>/dev/null
 sleep 1
 
+# Node/npx live under the Hermes node install; make sure the server can find them
+export PATH="/home/kali/.hermes/node/bin:$PATH"
+
 # Start with nohup so it survives disconnect
-nohup python3 server.py 3460 >> /home/kali/mcp-workbench/logs/server.log 2>>> /home/kali/mcp-workbench/logs/server_error.log &
+nohup python3 server.py 3460 >> /home/kali/mcp-workbench/logs/server.log 2>> /home/kali/mcp-workbench/logs/server_error.log &
 
 echo "MCP Workbench server started on port 3460"
 echo "Logs: logs/server.log"

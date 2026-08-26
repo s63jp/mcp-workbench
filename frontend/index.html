@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Workbench — Server Directory</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --bg-card: #161b22;
+      --border: #30363d;
+      --border-muted: #21262d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --accent-muted: #1f6feb;
+      --success: #3fb950;
+      --warning: #d29922;
+      --error: #f85149;
+      --tag-bg: #1f2937;
+      --shadow: 0 4px 24px rgba(0,0,0,0.4);
+      --radius: 10px;
+      --radius-sm: 6px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent-muted), #7c3aed);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .tagline {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Search */
+    .search-container {
+      flex: 1;
+      max-width: 480px;
+      min-width: 240px;
+    }
+
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.625rem 1rem 0.625rem 2.75rem;
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      font-family: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+    }
+
+    .search-input::placeholder { color: var(--text-muted); }
+
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+    }
+
+    /* Stats bar */
+    .stats-bar {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .stats {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    .stat-value {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 6px var(--success);
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: 0.25rem;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0.375rem 0.875rem;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      font-weight: 500;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(88, 166, 255, 0.06);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-muted);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Main content */
+    .main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem 3rem;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Card */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-muted), #7c3aed);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .card-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+
+    .card-badge {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      padding: 0.1875rem 0.5rem;
+      border-radius: 4px;
+      background: var(--tag-bg);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      flex-shrink: 0;
+    }
+
+    .card-description {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: auto;
+      padding-top: 0.25rem;
+    }
+
+    .card-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+    }
+
+    .card-tag {
+      font-size: 0.6875rem;
+      padding: 0.1875rem 0.5rem;
+      border-radius: 4px;
+      background: rgba(88, 166, 255, 0.08);
+      color: var(--accent);
+      border: 1px solid rgba(88, 166, 255, 0.15);
+      font-weight: 500;
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state p { font-size: 0.875rem; }
+
+    /* Loading */
+    .loading-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 680px;
+      max-height: 85vh;
+      overflow-y: auto;
+      transform: translateY(12px);
+      transition: transform 0.2s;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      background: var(--bg-secondary);
+      z-index: 1;
+    }
+
+    .modal-title-area { flex: 1; min-width: 0; }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.375rem;
+    }
+
+    .modal-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: var(--radius-sm);
+      transition: color 0.15s, background 0.15s;
+      flex-shrink: 0;
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: var(--text-primary);
+      background: var(--bg-tertiary);
+    }
+
+    .modal-body { padding: 1.5rem; }
+
+    .modal-description {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-section { margin-bottom: 1.5rem; }
+
+    .modal-section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .modal-props {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .modal-prop {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-muted);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+    }
+
+    .modal-prop-label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+      font-weight: 500;
+    }
+
+    .modal-prop-value {
+      font-size: 0.875rem;
+      color: var(--text-primary);
+      font-family: 'JetBrains Mono', monospace;
+      word-break: break-all;
+    }
+
+    .modal-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .modal-tag {
+      font-size: 0.8125rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: 6px;
+      background: rgba(88, 166, 255, 0.08);
+      color: var(--accent);
+      border: 1px solid rgba(88, 166, 255, 0.15);
+      font-weight: 500;
+    }
+
+    /* Test result */
+    .test-result {
+      margin-top: 1rem;
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-all;
+      display: none;
+    }
+
+    .test-result.success {
+      display: block;
+      background: rgba(63, 185, 80, 0.08);
+      border: 1px solid rgba(63, 185, 80, 0.25);
+      color: var(--success);
+    }
+
+    .test-result.error {
+      display: block;
+      background: rgba(248, 81, 73, 0.08);
+      border: 1px solid rgba(248, 81, 73, 0.25);
+      color: var(--error);
+    }
+
+    .test-result.loading {
+      display: block;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent-muted);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(88, 166, 255, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    /* Modal footer */
+    .modal-footer {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      position: sticky;
+      bottom: 0;
+      background: var(--bg-secondary);
+    }
+
+    /* Error banner */
+    .error-banner {
+      background: rgba(248, 81, 73, 0.1);
+      border: 1px solid rgba(248, 81, 73, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    .error-banner.visible { display: block; }
+
+    .error-banner-title {
+      font-weight: 600;
+      color: var(--error);
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .error-banner p { font-size: 0.8125rem; color: var(--text-secondary); }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .header-inner { gap: 1rem; }
+      .search-container { order: 3; width: 100%; max-width: none; }
+      .stats-bar { padding: 1rem; }
+      .main { padding: 0 1rem 2rem; }
+      .grid { grid-template-columns: 1fr; }
+      .modal-props { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">MCP</div>
+      <div>
+        <div>MCP Workbench</div>
+        <div class="tagline">Model Context Protocol Directory</div>
+      </div>
+    </a>
+    <div class="search-container">
+      <div class="search-wrapper">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search servers, categories, tags…" autocomplete="off">
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stats">
+    <div class="stat">
+      <span class="status-dot"></span>
+      <span>API: <span class="stat-value">localhost:3460</span></span>
+    </div>
+    <div class="stat">
+      <span class="stat-value" id="serverCount">—</span>
+      <span>servers</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value" id="categoryCount">—</span>
+      <span>categories</span>
+    </div>
+  </div>
+  <div class="filters" id="filterBar">
+    <span class="filter-label">Filter:</span>
+    <!-- populated by JS -->
+  </div>
+</div>
+
+<main class="main">
+  <div class="error-banner" id="errorBanner">
+    <div class="error-banner-title">Failed to load servers</div>
+    <p id="errorMessage">Could not connect to the MCP Workbench API.</p>
+  </div>
+  <div class="grid" id="serverGrid">
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading servers…</p>
+    </div>
+  </div>
+</main>
+
+<!-- Detail Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-header">
+      <div class="modal-title-area">
+        <h2 class="modal-title" id="modalTitle">Server Name</h2>
+        <div class="modal-category" id="modalCategory">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <span id="modalCategoryText">category</span>
+        </div>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-description" id="modalDescription">Server description goes here.</p>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Details</div>
+        <div class="modal-props">
+          <div class="modal-prop">
+            <div class="modal-prop-label">Server ID</div>
+            <div class="modal-prop-value" id="modalId">—</div>
+          </div>
+          <div class="modal-prop">
+            <div class="modal-prop-label">Category</div>
+            <div class="modal-prop-value" id="modalCategoryValue">—</div>
+          </div>
+          <div class="modal-prop">
+            <div class="modal-prop-label">Protocol Version</div>
+            <div class="modal-prop-value" id="modalVersion">—</div>
+          </div>
+          <div class="modal-prop">
+            <div class="modal-prop-label">Port</div>
+            <div class="modal-prop-value" id="modalPort">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Tags</div>
+        <div class="modal-tags" id="modalTags"></div>
+      </div>
+
+      <div class="modal-section" id="modalEndpointsSection">
+        <div class="modal-section-title">Endpoints</div>
+        <div class="modal-props">
+          <div class="modal-prop">
+            <div class="modal-prop-label">List</div>
+            <div class="modal-prop-value" id="modalListEndpoint">—</div>
+          </div>
+          <div class="modal-prop">
+            <div class="modal-prop-label">Test</div>
+            <div class="modal-prop-value" id="modalTestEndpoint">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="testResult" class="test-result"></div>
+    </div>
+    <div class="modal-footer">
+      <div></div>
+      <button class="btn btn-primary" id="testBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Run Test
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const API = 'http://localhost:3460';
+  const GRID = document.getElementById('serverGrid');
+  const SEARCH = document.getElementById('searchInput');
+  const FILTER_BAR = document.getElementById('filterBar');
+  const SERVER_COUNT = document.getElementById('serverCount');
+  const CATEGORY_COUNT = document.getElementById('categoryCount');
+  const ERROR_BANNER = document.getElementById('errorBanner');
+  const ERROR_MSG = document.getElementById('errorMessage');
+  const MODAL = document.getElementById('modalOverlay');
+  const MODAL_TITLE = document.getElementById('modalTitle');
+  const MODAL_CLOSE = document.getElementById('modalClose');
+  const TEST_BTN = document.getElementById('testBtn');
+  const TEST_RESULT = document.getElementById('testResult');
+
+  let allServers = [];
+  let categories = [];
+  let activeCategory = 'all';
+  let currentServerId = null;
+
+  // ── Fetch ──────────────────────────────────────────────────────────────────
+  async function api(path) {
+    const r = await fetch(API + path);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return r.json();
+  }
+
+  async function loadData() {
+    try {
+      ERROR_BANNER.classList.remove('visible');
+      const [servers, cats] = await Promise.all([
+        api('/api/mcp-servers'),
+        api('/api/mcp-servers/categories')
+      ]);
+      allServers = Array.isArray(servers) ? servers : (servers.servers || []);
+      categories = Array.isArray(cats) ? cats : (cats.categories || []);
+      renderStats();
+      renderFilters();
+      renderGrid();
+    } catch (e) {
+      ERROR_BANNER.classList.add('visible');
+      ERROR_MSG.textContent = e.message || 'Could not reach the API server.';
+      SERVER_COUNT.textContent = '?';
+      CATEGORY_COUNT.textContent = '?';
+      GRID.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">⚠</div>
+          <h3>Cannot connect to API</h3>
+          <p>Make sure the MCP Workbench server is running on port 3460.</p>
+        </div>`;
+    }
+  }
+
+  function renderStats() {
+    SERVER_COUNT.textContent = allServers.length;
+    CATEGORY_COUNT.textContent = categories.length;
+  }
+
+  // ── Filters ────────────────────────────────────────────────────────────────
+  function renderFilters() {
+    const label = document.createElement('span');
+    label.className = 'filter-label';
+    label.textContent = 'Filter:';
+    label.id = 'filterLabel';
+    FILTER_BAR.innerHTML = '';
+    FILTER_BAR.appendChild(label);
+
+    const allBtn = makeFilterBtn('All', 'all');
+    if (activeCategory === 'all') allBtn.classList.add('active');
+    FILTER_BAR.appendChild(allBtn);
+
+    categories.forEach(cat => {
+      const btn = makeFilterBtn(cat, cat);
+      if (activeCategory === cat) btn.classList.add('active');
+      FILTER_BAR.appendChild(btn);
+    });
+  }
+
+  function makeFilterBtn(label, value) {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = label;
+    btn.dataset.category = value;
+    btn.addEventListener('click', () => {
+      activeCategory = value;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGrid();
+    });
+    return btn;
+  }
+
+  // ── Grid ───────────────────────────────────────────────────────────────────
+  function getFiltered() {
+    const q = SEARCH.value.trim().toLowerCase();
+    return allServers.filter(s => {
+      const matchCat = activeCategory === 'all' || (s.category || '').toLowerCase() === activeCategory.toLowerCase();
+      const matchQ = !q ||
+        (s.name || '').toLowerCase().includes(q) ||
+        (s.description || '').toLowerCase().includes(q) ||
+        (s.category || '').toLowerCase().includes(q) ||
+        (s.tags || []).some(t => t.toLowerCase().includes(q));
+      return matchCat && matchQ;
+    });
+  }
+
+  function renderGrid() {
+    const servers = getFiltered();
+    if (!servers.length) {
+      GRID.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">🔍</div>
+          <h3>No servers found</h3>
+          <p>Try a different search or filter.</p>
+        </div>`;
+      return;
+    }
+    GRID.innerHTML = '';
+    servers.forEach(s => {
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.dataset.id = s.id || s.name;
+      card.innerHTML = `
+        <div class="card-header">
+          <h3 class="card-title"></h3>
+          <span class="card-badge"></span>
+        </div>
+        <p class="card-description"></p>
+        <div class="card-tags"></div>
+        <div class="card-meta">
+          <span class="card-meta-item cat-meta">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
+          </span>
+          <span class="card-meta-item ver-meta" style="display:none">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+            <span class="ver-text"></span>
+          </span>
+        </div>`;
+      card.querySelector('.card-title').textContent = s.name || 'Unnamed Server';
+      card.querySelector('.card-badge').textContent = s.category || 'general';
+      card.querySelector('.card-description').textContent = s.description || 'No description available.';
+      const tagsEl = card.querySelector('.card-tags');
+      (s.tags || []).slice(0, 4).forEach(t => {
+        const span = document.createElement('span');
+        span.className = 'card-tag';
+        span.textContent = t;
+        tagsEl.appendChild(span);
+      });
+      card.querySelector('.cat-meta').appendChild(document.createTextNode(' ' + (s.category || 'general')));
+      if (s.version) {
+        card.querySelector('.ver-meta').style.display = '';
+        card.querySelector('.ver-text').textContent = 'v' + s.version;
+      }
+      card.addEventListener('click', () => openModal(card.dataset.id));
+      GRID.appendChild(card);
+    });
+
+    GRID.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => openModal(card.dataset.id));
+    });
+  }
+
+  function esc(str) {
+    return String(str == null ? '' : str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ── Modal ──────────────────────────────────────────────────────────────────
+  function openModal(id) {
+    currentServerId = id;
+    const s = allServers.find(sv => (sv.id || sv.name) === id);
+    if (!s) return;
+
+    MODAL_TITLE.textContent = s.name || 'Unnamed Server';
+    document.getElementById('modalCategoryText').textContent = s.category || 'general';
+    document.getElementById('modalDescription').textContent = s.description || 'No description available.';
+    document.getElementById('modalId').textContent = s.id || id;
+    document.getElementById('modalCategoryValue').textContent = s.category || '—';
+    document.getElementById('modalVersion').textContent = s.version || '—';
+    document.getElementById('modalPort').textContent = s.port || '—';
+    document.getElementById('modalListEndpoint').textContent = `${API}/api/mcp-servers/${id}`;
+    document.getElementById('modalTestEndpoint').textContent = `${API}/api/mcp-servers/test/${id}`;
+
+    const tagsEl = document.getElementById('modalTags');
+    tagsEl.innerHTML = (s.tags || []).map(t => `<span class="modal-tag">${esc(t)}</span>`).join('');
+
+    TEST_RESULT.className = 'test-result';
+    TEST_RESULT.textContent = '';
+    TEST_BTN.disabled = false;
+    TEST_BTN.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run Test`;
+
+    MODAL.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    MODAL.classList.remove('open');
+    document.body.style.overflow = '';
+    currentServerId = null;
+  }
+
+  MODAL_CLOSE.addEventListener('click', closeModal);
+  MODAL.addEventListener('click', e => { if (e.target === MODAL) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // ── Test ───────────────────────────────────────────────────────────────────
+  TEST_BTN.addEventListener('click', async () => {
+    if (!currentServerId) return;
+    TEST_BTN.disabled = true;
+    TEST_BTN.innerHTML = '<span class="btn-spinner"></span> Testing…';
+    TEST_RESULT.className = 'test-result loading';
+    TEST_RESULT.textContent = 'Running test, please wait…';
+
+    try {
+      const res = await fetch(`${API}/api/mcp-servers/test/${currentServerId}`);
+      const text = await res.text();
+      const ok = res.ok;
+      TEST_RESULT.className = `test-result ${ok ? 'success' : 'error'}`;
+      TEST_RESULT.textContent = ok ? `✅ Test passed\n\n${text}` : `❌ Test failed (HTTP ${res.status})\n\n${text}`;
+    } catch (e) {
+      TEST_RESULT.className = 'test-result error';
+      TEST_RESULT.textContent = `❌ Network error\n\n${e.message}`;
+    } finally {
+      TEST_BTN.disabled = false;
+      TEST_BTN.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg> Run Test`;
+    }
+  });
+
+  // ── Search ─────────────────────────────────────────────────────────────────
+  SEARCH.addEventListener('input', renderGrid);
+
+  // ── Boot ───────────────────────────────────────────────────────────────────
+  loadData();
+})();
+</script>
+
+</body>
+</html>

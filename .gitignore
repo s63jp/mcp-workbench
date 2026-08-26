@@ -17,3 +17,4 @@ server.py
 proxy.py
 *.py
 !scripts/*.py
+.env.twitter

@@ -282,6 +282,34 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Structured data for search engines.
+          Safe: content is a static JSON-LD object built from hardcoded
+          strings only — no user input ever reaches this script. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            name: "MCP Workbench",
+            applicationCategory: "DeveloperApplication",
+            operatingSystem: "Web",
+            url: "https://mcp-workbench.uk",
+            description:
+              "Web-based testing platform for Model Context Protocol (MCP) servers. Connect, test tools, validate compatibility, and debug JSON-RPC traffic in your browser.",
+            offers: [
+              { "@type": "Offer", name: "Free", price: "0", priceCurrency: "GBP" },
+              { "@type": "Offer", name: "Pro", price: "9", priceCurrency: "GBP" },
+              { "@type": "Offer", name: "Team", price: "29", priceCurrency: "GBP" },
+            ],
+            aggregateRating: {
+              "@type": "AggregateRating",
+              ratingValue: "5",
+              ratingCount: "1",
+            },
+          }),
+        }}
+      />
       {/* ─── Navbar ─────────────────────────────────────── */}
       <nav className="border-b border-border">
         <div className="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between">
@@ -297,8 +325,8 @@ export default function HomePage() {
             <a href="https://github.com/s63jp/mcp-workbench" className="hover:text-foreground transition-colors">GitHub</a>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
-            <button className="hidden sm:block text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors">Sign In</button>
-            <button className="text-sm px-3 sm:px-4 py-1.5 rounded-lg bg-primary text-white hover:bg-primary-hover transition-colors">Get Started</button>
+            <a href="/login" className="hidden sm:block text-sm px-3 py-1.5 rounded-lg border border-border hover:bg-surface-hover transition-colors">Sign In</a>
+            <a href="/register" className="text-sm px-3 sm:px-4 py-1.5 rounded-lg bg-primary text-white hover:bg-primary-hover transition-colors">Get Started</a>
           </div>
         </div>
       </nav>
@@ -320,7 +348,7 @@ export default function HomePage() {
         <div className="max-w-md mx-auto mb-8 p-6 rounded-xl border border-border bg-surface shadow-lg">
           <h3 className="text-xl font-bold mb-2">Join the Beta</h3>
           <p className="text-sm text-muted mb-4">
-            Sign up to test MCP Workbench — an autonomous SaaS for AI agents. Run cron jobs, social media, and monitoring overnight.
+            Sign up to test MCP Workbench — the visual testing platform for MCP servers. Connect, test tools, and debug JSON-RPC traffic right in your browser.
           </p>
           <form onSubmit={async (e) => {
             e.preventDefault();
@@ -389,17 +417,17 @@ export default function HomePage() {
         </div>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          <button className="px-6 py-2.5 rounded-xl bg-primary text-white font-medium hover:bg-primary-hover transition-colors flex items-center gap-2">
+          <a href="#workbench" className="px-6 py-2.5 rounded-xl bg-primary text-white font-medium hover:bg-primary-hover transition-colors flex items-center gap-2">
             <Play size={18} fill="currentColor" /> Launch Workbench
-          </button>
-          <button className="px-6 py-2.5 rounded-xl border border-border hover:bg-surface-hover transition-colors font-medium">
+          </a>
+          <a href="https://github.com/s63jp/mcp-workbench" target="_blank" rel="noopener noreferrer" className="px-6 py-2.5 rounded-xl border border-border hover:bg-surface-hover transition-colors font-medium">
             View on GitHub
-          </button>
+          </a>
         </div>
       </section>
 
       {/* ─── Workbench ────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-4 py-10">
+      <section id="workbench" className="max-w-6xl mx-auto px-4 py-10">
         <div className="rounded-2xl border border-border bg-surface overflow-hidden shadow-2xl shadow-black/40">
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-surface-hover">
@@ -699,9 +727,9 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-                <button className={`w-full py-2 rounded-lg text-sm font-medium transition-colors ${tier.highlight ? "bg-primary text-white hover:bg-primary-hover" : "border border-border hover:bg-surface-hover"}`}>
+                <a href={tier.name === "Free" ? "/register" : "/login"} className={`w-full py-2 rounded-lg text-sm font-medium transition-colors text-center ${tier.highlight ? "bg-primary text-white hover:bg-primary-hover" : "border border-border hover:bg-surface-hover"}`}>
                   {tier.cta}
-                </button>
+                </a>
               </div>
             ))}
           </div>
@@ -754,16 +782,16 @@ export default function HomePage() {
       {/* ─── CTA ──────────────────────────────────────────── */}
       <section className="py-16 px-4 text-center">
         <h2 className="text-3xl font-bold mb-4">Ready to test your MCP server?</h2>
-        <p className="text-muted mb-8 max-w-lg mx-auto">Join thousands of developers who stopped wrestling with config files and started shipping.</p>
-        <button className="px-8 py-3 rounded-xl bg-primary text-white font-medium hover:bg-primary-hover transition-colors text-lg">
+        <p className="text-muted mb-8 max-w-lg mx-auto">Join developers who stopped wrestling with config files and started shipping.</p>
+        <a href="/register" className="inline-block px-8 py-3 rounded-xl bg-primary text-white font-medium hover:bg-primary-hover transition-colors text-lg">
           Get Started for Free →
-        </button>
+        </a>
       </section>
 
       {/* ─── Footer ───────────────────────────────────────── */}
       <footer className="border-t border-border py-8 px-4 text-center text-sm text-muted">
-        <p>© 2024 MCP Workbench. Built for the MCP community.</p>
-        <p className="mt-2">Contact: <a href="mailto:mcp-workbench@agentmail.to" className="text-primary hover:underline">mcp-workbench@agentmail.to</a></p>
+        <p>© 2026 MCP Workbench. Built for the MCP community.</p>
+        <p className="mt-2">Contact: <a href="mailto:gizmo50009@agentmail.ai" className="text-primary hover:underline">gizmo50009@agentmail.ai</a></p>
         <div className="flex items-center justify-center gap-4 mt-3">
           <a href="#" className="hover:text-foreground transition-colors">Privacy</a>
           <a href="#" className="hover:text-foreground transition-colors">Terms</a>

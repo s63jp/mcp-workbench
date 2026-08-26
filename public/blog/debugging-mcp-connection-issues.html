@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debugging MCP Server Connection Issues: 7 Common Errors and Fixes | MCP Workbench</title>
+<meta name="description" content="MCP server won't connect? This guide covers the 7 most common MCP connection errors — stdio pollution, protocol mismatches, invalid schemas, missing dependencies — and how to fix each one.">
+<meta name="keywords" content="MCP server connection failed, MCP debugging, MCP stdio error, MCP server not working, fix MCP connection">
+<link rel="canonical" href="https://mcp-workbench.uk/blog/debugging-mcp-connection-issues.html">
+<meta property="og:title" content="Debugging MCP Server Connection Issues: 7 Common Errors and Fixes">
+<meta property="og:description" content="The 7 most common MCP connection errors and exactly how to fix each one.">
+<meta property="og:url" content="https://mcp-workbench.uk/blog/debugging-mcp-connection-issues.html">
+<meta property="og:type" content="article">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  nav { border-bottom: 1px solid #1f1f2e; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; }
+  nav a { color: #667eea; text-decoration: none; font-weight: 600; }
+  h1 { font-size: 2.2rem; line-height: 1.25; margin: 30px 0 12px; color: #fff; }
+  h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #fff; }
+  p, li { margin-bottom: 14px; color: #b8b8c8; }
+  code { background: #16161f; border: 1px solid #2a2a40; border-radius: 4px; padding: 2px 6px; font-size: 0.9em; color: #9db4ff; }
+  pre { background: #16161f; border: 1px solid #2a2a40; border-radius: 8px; padding: 16px; overflow-x: auto; margin: 16px 0; font-size: 0.9em; color: #c8d0ff; }
+  .cta { background: linear-gradient(135deg, #1a1a2e 0%, #141420 100%); border: 1px solid #2a2a40; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .cta a { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 12px; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 24px; }
+  ul, ol { padding-left: 24px; margin-bottom: 16px; }
+  .err { background: #16161f; border-left: 3px solid #f87171; border-radius: 4px; padding: 12px 16px; margin: 16px 0; font-family: monospace; font-size: 0.9em; color: #fca5a5; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">⚡ MCP Workbench</a>
+  <a href="/register">Try it free →</a>
+</nav>
+<div class="wrap">
+  <h1>Debugging MCP Server Connection Issues: 7 Common Errors and Fixes</h1>
+  <p class="meta">Published August 2026 · 7 min read</p>
+
+  <p>"MCP server failed to connect" is the most common complaint in the MCP ecosystem. The error message is almost always useless — a generic failure with no hint about what actually went wrong. Here are the seven real causes, in order of frequency, and how to fix each one.</p>
+
+  <h2>1. Stdio pollution (the #1 killer)</h2>
+  <p>MCP servers communicate over stdout using newline-delimited JSON-RPC. If anything else writes to stdout — a <code>console.log</code>, a startup banner, a debug print — the client's JSON parser chokes.</p>
+  <div class="err">Error: MCP error -32000: Connection closed</div>
+  <p><strong>Fix:</strong> route all logging to stderr. In Node: <code>console.error()</code> instead of <code>console.log()</code>. In Python: use the <code>logging</code> module (it defaults to stderr).</p>
+
+  <h2>2. Wrong protocol version</h2>
+  <p>Clients negotiate the MCP protocol version during <code>initialize</code>. Servers that hardcode an old version (or don't reply at all) get rejected.</p>
+  <div class="err">Error: Server does not support protocol version</div>
+  <p><strong>Fix:</strong> reply to <code>initialize</code> with the version the client requested, or at minimum <code>2024-11-05</code>.</p>
+
+  <h2>3. Missing or broken dependencies</h2>
+  <p><code>npx</code> servers that fail to download, Python servers with missing pip packages, Node servers with native modules that won't build — all produce the same opaque failure.</p>
+  <p><strong>Fix:</strong> run the server command manually in a terminal first. If it crashes there, it will crash in the client too.</p>
+
+  <h2>4. Invalid tool schemas</h2>
+  <p>A server can connect successfully but expose zero tools if its input schemas are malformed. Clients silently drop invalid tools.</p>
+  <p><strong>Fix:</strong> validate every tool schema against JSON Schema. Root must be <code>{"type": "object"}</code> with a <code>properties</code> map.</p>
+
+  <h2>5. Environment variables not set</h2>
+  <p>Servers that need API keys (GitHub, Slack, databases) fail at the first tool call — not at connect time. The connection looks fine, then every call errors.</p>
+  <p><strong>Fix:</strong> check the server's README for required env vars and set them in your client config.</p>
+
+  <h2>6. Path/working directory issues</h2>
+  <p>Relative paths in server configs resolve against the client's working directory, not the server's. A server that works from your terminal fails from Claude Desktop.</p>
+  <p><strong>Fix:</strong> use absolute paths everywhere in MCP configs.</p>
+
+  <h2>7. Port conflicts (SSE/HTTP servers)</h2>
+  <p>For remote MCP servers, a port already in use or a firewall blocking the connection produces instant failures.</p>
+  <p><strong>Fix:</strong> check <code>ss -tlnp</code> for conflicts and confirm the port is reachable from the client machine.</p>
+
+  <h2>The 60-second diagnostic</h2>
+  <p>Instead of guessing, use a tool that shows you the actual JSON-RPC traffic. <a href="/">MCP Workbench</a> connects to any MCP server in your browser and shows every message in both directions — you'll see the exact point where the handshake breaks, the raw error, and the tool list if it connects.</p>
+
+  <div class="cta">
+    <h3>See exactly why your MCP server is failing</h3>
+    <p>Connect it in the browser and watch the raw JSON-RPC traffic.</p>
+    <a href="/register">Debug it now — free</a>
+  </div>
+</div>
+</body>
+</html>

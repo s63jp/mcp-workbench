@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Test MCP Servers: The Complete Guide (2026) | MCP Workbench</title>
+<meta name="description" content="Learn how to test Model Context Protocol servers: manual stdio testing, automated validation, tool schema checks, and browser-based testing with MCP Workbench.">
+<meta name="keywords" content="test MCP server, MCP server testing, Model Context Protocol testing, MCP validation, MCP debugger">
+<link rel="canonical" href="https://mcp-workbench.uk/blog/how-to-test-mcp-servers.html">
+<meta property="og:title" content="How to Test MCP Servers: The Complete Guide (2026)">
+<meta property="og:description" content="Manual stdio testing, automated validation, tool schema checks, and browser-based testing — everything you need to verify an MCP server works.">
+<meta property="og:url" content="https://mcp-workbench.uk/blog/how-to-test-mcp-servers.html">
+<meta property="og:type" content="article">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #e0e0e0; line-height: 1.7; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 80px; }
+  nav { border-bottom: 1px solid #1f1f2e; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; }
+  nav a { color: #667eea; text-decoration: none; font-weight: 600; }
+  h1 { font-size: 2.2rem; line-height: 1.25; margin: 30px 0 12px; color: #fff; }
+  h2 { font-size: 1.5rem; margin: 36px 0 12px; color: #fff; }
+  h3 { font-size: 1.15rem; margin: 24px 0 8px; color: #ddd; }
+  p, li { margin-bottom: 14px; color: #b8b8c8; }
+  code { background: #16161f; border: 1px solid #2a2a40; border-radius: 4px; padding: 2px 6px; font-size: 0.9em; color: #9db4ff; }
+  pre { background: #16161f; border: 1px solid #2a2a40; border-radius: 8px; padding: 16px; overflow-x: auto; margin: 16px 0; font-size: 0.9em; color: #c8d0ff; }
+  .cta { background: linear-gradient(135deg, #1a1a2e 0%, #141420 100%); border: 1px solid #2a2a40; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .cta a { display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 12px; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 24px; }
+  ul, ol { padding-left: 24px; margin-bottom: 16px; }
+  .toc { background: #141420; border: 1px solid #2a2a40; border-radius: 8px; padding: 16px 20px; margin: 20px 0; }
+  .toc a { color: #9db4ff; text-decoration: none; }
+</style>
+</head>
+<body>
+<nav>
+  <a href="/">⚡ MCP Workbench</a>
+  <a href="/register">Try it free →</a>
+</nav>
+<div class="wrap">
+  <h1>How to Test MCP Servers: The Complete Guide</h1>
+  <p class="meta">Published August 2026 · 8 min read</p>
+
+  <p>The Model Context Protocol (MCP) has become the standard way to give AI assistants like Claude, Cursor, and VS Code Copilot access to external tools and data. There are now 1,000+ community MCP servers — but a huge number of them fail on first install. The #1 issue on the official MCP servers repo is literally "server fails to connect."</p>
+
+  <p>This guide covers every way to test an MCP server, from quick manual checks to full automated validation.</p>
+
+  <div class="toc">
+    <strong>Contents</strong>
+    <ol>
+      <li><a href="#why">Why MCP servers fail</a></li>
+      <li><a href="#manual">Manual testing with stdio</a></li>
+      <li><a href="#jsonrpc">Testing the JSON-RPC handshake</a></li>
+      <li><a href="#tools">Validating tool schemas</a></li>
+      <li><a href="#browser">Browser-based testing (the fast way)</a></li>
+      <li><a href="#automated">Automated verification</a></li>
+    </ol>
+  </div>
+
+  <h2 id="why">Why MCP servers fail</h2>
+  <p>Most MCP server failures come down to four things:</p>
+  <ul>
+    <li><strong>Transport problems</strong> — the client can't spawn the process, or stdio gets polluted by log output (a classic: <code>console.log</code> in a Node server corrupts the JSON-RPC stream).</li>
+    <li><strong>Handshake failures</strong> — the server doesn't respond to <code>initialize</code> with a valid protocol version.</li>
+    <li><strong>Schema errors</strong> — tool input schemas are malformed, so clients reject them.</li>
+    <li><strong>Runtime crashes</strong> — the server starts, then dies on the first real tool call.</li>
+  </ul>
+
+  <h2 id="manual">1. Manual testing with stdio</h2>
+  <p>The quickest sanity check is to spawn the server and send it the MCP initialize message by hand:</p>
+  <pre>echo '{"jsonrpc":"2.0","id":0,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0"}}}' | npx -y @modelcontextprotocol/server-filesystem /tmp</pre>
+  <p>If you get a JSON response with <code>"result"</code> and a <code>protocolVersion</code>, the server is alive. If you get nothing, a stack trace, or garbage before the JSON, you've found a transport bug.</p>
+
+  <h2 id="jsonrpc">2. Testing the JSON-RPC handshake</h2>
+  <p>A proper MCP session follows a strict sequence:</p>
+  <ol>
+    <li>Client sends <code>initialize</code> → server replies with capabilities</li>
+    <li>Client sends <code>notifications/initialized</code></li>
+    <li>Client sends <code>tools/list</code> → server replies with tool definitions</li>
+    <li>Client sends <code>tools/call</code> → server executes and returns content</li>
+  </ol>
+  <p>Many servers break at step 3 or 4. Testing each step individually tells you exactly where the problem is.</p>
+
+  <h2 id="tools">3. Validating tool schemas</h2>
+  <p>Tool schemas must be valid JSON Schema with <code>type: "object"</code> at the root. Common bugs: missing <code>required</code> arrays, wrong types (<code>"integer"</code> vs <code>"number"</code>), and descriptions that are empty strings. Clients like Claude Desktop silently drop tools with invalid schemas — which is why a server can "connect" but show zero tools.</p>
+
+  <h2 id="browser">4. Browser-based testing (the fast way)</h2>
+  <p>This is exactly the problem <a href="/">MCP Workbench</a> was built to solve. Instead of hand-crafting JSON-RPC messages in a terminal, you paste a server command into a browser and get:</p>
+  <ul>
+    <li>Instant connection with the full initialize handshake handled for you</li>
+    <li>All discovered tools with their schemas rendered visually</li>
+    <li>One-click tool calls with parameter inputs</li>
+    <li>A raw JSON-RPC console showing every message in both directions</li>
+  </ul>
+  <p>It's free for public servers — <a href="/register">try it now</a> with any <code>npx</code> MCP server.</p>
+
+  <h2 id="automated">5. Automated verification</h2>
+  <p>For CI/CD, you want automated checks: startup time, tool discovery count, schema validity, and a smoke-test tool call. MCP Workbench's verification suite runs all of these and produces a pass/fail report with runtime evidence — startup logs, latency measurements, and memory profiles.</p>
+
+  <div class="cta">
+    <h3>Test your MCP server in 30 seconds</h3>
+    <p>Paste your server command, click Connect, and see every tool it exposes.</p>
+    <a href="/register">Launch MCP Workbench — free</a>
+  </div>
+</div>
+</body>
+</html>
